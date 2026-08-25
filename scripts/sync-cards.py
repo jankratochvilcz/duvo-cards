@@ -208,18 +208,31 @@ def generate_cards_md(data: dict) -> str:
 	return "\n".join(lines).rstrip() + "\n"
 
 
+ART_PATH_RE = re.compile(r"^art/[A-Za-z0-9_./-]+\.png$")
+# Card copy is rendered into HTML; reject markup so a bad JSON edit can't become XSS.
+UNSAFE_COPY_RE = re.compile(r"[<>]")
+
+
 def assign_and_validate_art(data: dict) -> list[str]:
 	errors: list[str] = []
 	for deck_key in DECK_ORDER:
 		for card in data[deck_key]:
 			path = art_path_for(deck_key, card["name"])
 			card["art"] = path
+			if not ART_PATH_RE.match(path):
+				errors.append(f"unsafe art path: {path} (card: {card['name']})")
 			full = ROOT / path
 			if not full.is_file():
 				errors.append(f"missing art: {path} (card: {card['name']})")
+			for field in ("name", "text", "flavor"):
+				val = card.get(field) or ""
+				if UNSAFE_COPY_RE.search(str(val)):
+					errors.append(f"HTML-like characters in {field}: {card['name']}")
 	# Faction key art
 	for deck_key in DECK_ORDER:
 		path = f"art/factions/{deck_key}.png"
+		if not ART_PATH_RE.match(path):
+			errors.append(f"unsafe faction art path: {path}")
 		if not (ROOT / path).is_file():
 			errors.append(f"missing faction key art: {path}")
 	return errors
