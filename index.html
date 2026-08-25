@@ -33,38 +33,48 @@ button:focus-visible, .card:focus-visible{outline:2px solid var(--gold);outline-
 .wrap{max-width:1180px;margin:0 auto;padding:20px 16px 60px;}
 
 /* ---------- Hero / Select screen ---------- */
-.hero{padding:40px 0 24px;text-align:center;}
-.hero-title{font-family:var(--mono);font-weight:700;font-size:clamp(28px,6vw,52px);letter-spacing:0.02em;margin:0;}
+.hero{padding:18px 0 10px;text-align:center;}
+.hero-title{font-family:var(--mono);font-weight:700;font-size:clamp(26px,5vw,42px);letter-spacing:0.02em;margin:0;}
 .hero-title .cursor{display:inline-block;width:0.5em;background:var(--gold);margin-left:6px;animation:blink 1s step-end infinite;}
 @keyframes blink{50%{opacity:0;}}
-.hero-sub{color:var(--muted);font-family:var(--mono);font-size:13px;margin-top:8px;letter-spacing:0.03em;}
+.hero-sub{color:var(--muted);font-family:var(--mono);font-size:12px;margin-top:6px;letter-spacing:0.03em;}
 
-.select-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px;}
+.pitch{max-width:720px;margin:14px auto 0;text-align:left;background:var(--fog);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
+.pitch-lead{margin:0 0 10px;font-size:14px;line-height:1.5;color:var(--signal);}
+.pitch-rules{margin:0;padding-left:18px;font-size:13px;line-height:1.55;color:var(--muted);}
+.pitch-rules li{margin-bottom:4px;}
+.pitch-rules b{color:var(--signal);font-weight:600;}
+
+.select-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
 @media (max-width:700px){.select-grid{grid-template-columns:1fr;}}
-.select-col h3{font-family:var(--mono);font-size:12px;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;margin:0 0 10px 2px;}
-.deck-option{width:100%;text-align:left;background:var(--fog);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin-bottom:8px;color:var(--signal);transition:transform .12s, border-color .12s;}
-.deck-art{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;
+.select-col h3{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;margin:0 0 6px 2px;}
+.deck-option{width:100%;display:flex;align-items:center;gap:10px;text-align:left;background:var(--fog);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:7px 10px;margin-bottom:5px;color:var(--signal);transition:transform .12s, border-color .12s;}
+.deck-art{flex:0 0 44px;width:44px;height:44px;object-fit:cover;border-radius:6px;
   border:1px solid color-mix(in srgb, var(--accent,var(--gold)) 35%, transparent);}
+.deck-option-body{min-width:0;flex:1;}
 .deck-option:hover{transform:translateY(-1px);border-color:var(--accent);}
 .deck-option.selected{background:var(--fog2);box-shadow:0 0 0 2px var(--accent) inset;}
-.deck-option .dname{font-family:var(--mono);font-weight:600;font-size:14px;color:var(--accent);}
-.deck-option .dblurb{font-size:12px;color:var(--muted);margin-top:3px;}
+.deck-option .dname{font-family:var(--mono);font-weight:600;font-size:13px;color:var(--accent);line-height:1.2;}
+.deck-option .dblurb{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .deck-latency{--accent:var(--latency);}
 .deck-hallucination{--accent:var(--hallucination);}
 .deck-injection{--accent:var(--injection);}
 .deck-techdebt{--accent:var(--techdebt);}
 
-.mode-row{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap;}
+.mode-row{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
 .mode-btn{background:var(--fog);border:1px solid var(--line);color:var(--signal);padding:8px 14px;border-radius:20px;font-size:13px;font-family:var(--mono);}
 .mode-btn.active{background:var(--gold);color:#1a1508;border-color:var(--gold);}
 
-.start-btn{display:block;margin:26px auto 0;background:var(--gold);color:#1a1508;border:none;padding:14px 34px;font-family:var(--mono);font-weight:700;font-size:15px;border-radius:8px;letter-spacing:0.04em;}
+.start-btn{display:block;margin:16px auto 0;background:var(--gold);color:#1a1508;border:none;padding:12px 28px;font-family:var(--mono);font-weight:700;font-size:14px;border-radius:8px;letter-spacing:0.04em;}
 .start-btn:disabled{opacity:0.35;cursor:not-allowed;}
-.rules-toggle{display:block;margin:14px auto 0;background:none;border:1px solid var(--line);color:var(--muted);padding:8px 16px;border-radius:20px;font-size:12px;}
-.rules-panel{max-width:640px;margin:18px auto 0;background:var(--fog);border:1px solid var(--line);border-radius:10px;padding:18px 20px;font-size:13.5px;line-height:1.6;}
-.rules-panel h4{font-family:var(--mono);color:var(--gold);margin:14px 0 6px;font-size:13px;letter-spacing:0.04em;}
+.rules-toggle{display:block;margin:10px auto 0;background:none;border:none;color:var(--muted);padding:4px 8px;font-size:12px;font-family:var(--mono);text-decoration:underline;text-underline-offset:3px;}
+.rules-toggle:hover{color:var(--signal);}
+.rules-panel{max-width:720px;margin:10px auto 0;background:var(--fog);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:13px;line-height:1.55;}
+.rules-panel h4{font-family:var(--mono);color:var(--gold);margin:12px 0 4px;font-size:12px;letter-spacing:0.04em;}
 .rules-panel h4:first-child{margin-top:0;}
 .rules-panel ol,.rules-panel ul{margin:4px 0;padding-left:20px;}
+.rules-panel p{margin:0 0 6px;}
 
 /* ---------- Match screen ---------- */
 .match{display:none;}
@@ -1202,15 +1212,26 @@ function renderSelect(){
       const deckArt = safeArtSrc(m.art);
       return '<button class="deck-option deck-'+esc(k)+sel+'" onclick="'+setter+"('"+k+"')"+'">'+
         (deckArt ? '<img class="deck-art" src="'+esc(deckArt)+'" alt="">' : '')+
-        '<div class="dname">'+esc(m.label)+' — '+esc(m.tag)+'</div>'+
-        '<div class="dblurb">'+esc(m.blurb)+'</div>'+
+        '<div class="deck-option-body">'+
+          '<div class="dname">'+esc(m.label)+' — '+esc(m.tag)+'</div>'+
+          '<div class="dblurb">'+esc(m.blurb)+'</div>'+
+        '</div>'+
       '</button>';
     }).join('')+'</div>';
   }
   const ready = pickA && pickB;
   return '<div class="hero">'+
       '<h1 class="hero-title">SHIP IT<span class="cursor">&nbsp;</span></h1>'+
-      '<div class="hero-sub">// duvo playtest build — 4 decks, 30 cards each, first to '+WIN_POINTS+', ~15-20 min per match</div>'+
+      '<div class="hero-sub">// duvo playtest build — 4 decks · 30 cards · first to '+WIN_POINTS+' · ~15–20 min</div>'+
+    '</div>'+
+    '<div class="pitch">'+
+      '<p class="pitch-lead">A 2-player card battler about shipping AI products. Deploy Agents, swing for Ship Points, and try not to crash your own stack.</p>'+
+      '<ul class="pitch-rules">'+
+        '<li><b>Goal:</b> first to '+WIN_POINTS+' Ship Points wins. You score only with an unblocked hit — when they have no Primary Agent to defend.</li>'+
+        '<li><b>Board:</b> each player has a Primary and a Backup Agent slot. Deploy Agents and play Overclocks from a 30-card deck.</li>'+
+        '<li><b>Combat:</b> attacking is optional and risky. Your Primary hits theirs; if their Power meets your Stability, you crash too. Crashing their Agent clears the board but does not score by itself.</li>'+
+        '<li><b>Turn:</b> draw → optionally deploy &amp; Overclock → optionally Attack → End Turn. New Agents can\'t attack the turn they deploy.</li>'+
+      '</ul>'+
     '</div>'+
     '<div class="select-grid">'+
       '<div>'+'<h3>Your deck</h3>'+col(pickA,'setPickA')+'</div>'+
@@ -1221,13 +1242,13 @@ function renderSelect(){
       '<button class="mode-btn'+(mode==='hotseat'?' active':'')+'" onclick="setMode(&quot;hotseat&quot;)">Hotseat (control both)</button>'+
     '</div>'+
     '<button class="start-btn" '+(ready?'':'disabled')+' onclick="startMatch()">Start match</button>'+
-    '<button class="rules-toggle" onclick="toggleRules()">'+(rulesOpen?'Hide rules':'Show quick rules')+'</button>'+
+    '<button class="rules-toggle" onclick="toggleRules()">'+(rulesOpen?'Hide detailed rules':'Detailed turn rules')+'</button>'+
     (rulesOpen ? rulesHTML() : '');
 }
 
 function rulesHTML(){
   return '<div class="rules-panel">'+
-    '<h4>Setup</h4><p>Each player: 2 Agent slots (Primary/Backup), start at 0 Ship Points. First to '+WIN_POINTS+' wins.</p>'+
+    '<h4>Setup</h4><p>Each player: 2 Agent slots (Primary/Backup), start at 0 Ship Points. First to '+WIN_POINTS+' wins. Opening hand is 5 cards.</p>'+
     '<h4>Each turn</h4><ol>'+
       '<li>Draw 1 card.</li>'+
       '<li>Optionally deploy 1 Agent into an empty slot (Cost ≤ current turn number, capped at 4). A newly deployed Agent can\'t attack the turn it comes online.</li>'+
