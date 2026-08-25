@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  sync-cards:
+    name: Validate card SSOT
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run sync-cards.py (must be idempotent)
+        run: |
+          python3 scripts/sync-cards.py
+          if ! git diff --quiet; then
+            echo "::error::scripts/sync-cards.py rewrote files — commit the synced output"
+            git --no-pager diff --stat
+            exit 1
+          fi
+      - name: Sanity-check art paths
+        run: |
+          python3 - <<'PY'
+          import json, re, sys
+          from pathlib import Path
+          data = json.loads(Path("data/cards.json").read_text())
+          pat = re.compile(r"^art/[A-Za-z0-9_./-]+\.png$")
+          errors = []
+          for deck, cards in data.items():
+              for c in cards:
+                  art = c.get("art") or ""
+                  if not pat.match(art):
+                      errors.append(f"{deck}/{c['name']}: bad art path {art!r}")
+                  elif not Path(art).is_file():
+                      errors.append(f"{deck}/{c['name']}: missing file {art}")
+          if errors:
+              print("\n".join(errors))
+              sys.exit(1)
+          print(f"OK: {sum(len(v) for v in data.values())} cards, art paths valid")
+          PY

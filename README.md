@@ -6,8 +6,10 @@ playtest tool for Duvo swag/game ideas — four factions, 30 cards each, first t
 
 ## Play it
 
-Serve this folder over HTTP (card art paths need a real origin — opening `index.html` as a
-`file://` URL will load the game but may block images in some browsers):
+**Live:** https://jankratochvilcz.github.io/duvo-cards/
+
+Serve this folder over HTTP locally (card art paths need a real origin — opening `index.html`
+as a `file://` URL will load the game but may block images in some browsers):
 
 ```bash
 python3 -m http.server 8080

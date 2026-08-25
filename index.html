@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; connect-src 'none'">
 <title>SHIP IT — Playtest Build</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -184,6 +186,22 @@ button:focus-visible, .card:focus-visible{outline:2px solid var(--gold);outline-
 // kept as-is in the data/engine to minimize risk; only display text changed.
 const TYPE_LABEL = { process:'Agent', patch:'Overclock' };
 const WIN_POINTS = 5;
+
+// Escape text before concatenating into HTML. Card data is author-controlled today,
+// but this keeps a future cards.json edit from becoming a stored XSS vector for visitors.
+function esc(s){
+  return String(s==null?'':s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+// Only allow relative art paths under art/…/*.png (blocks javascript:/https: src).
+function safeArtSrc(path){
+  if(typeof path!=='string') return '';
+  return /^art\/[A-Za-z0-9_./-]+\.png$/.test(path) ? path : '';
+}
 
 function expand(list, deckKey){
   const out=[];
@@ -1127,26 +1145,27 @@ function initialGlyph(name){
 function cardFaceInner(c, opts){
   opts = opts || {};
   const isAgent = c.type==='process';
-  const costBadge = isAgent ? '<div class="card-cost">'+c.cost+'</div>' : '<div class="card-cost" style="opacity:.35;">&mdash;</div>';
+  const costBadge = isAgent ? '<div class="card-cost">'+esc(c.cost)+'</div>' : '<div class="card-cost" style="opacity:.35;">&mdash;</div>';
   const p = opts.displayPower!==undefined ? opts.displayPower : c.power;
   const s = opts.displayStability!==undefined ? opts.displayStability : c.stability;
   const statsRow = isAgent ? (
     '<div class="card-stats-row">'+
-      '<span class="card-stat power"><span class="lbl">PWR</span>&nbsp;'+p+'</span>'+
-      '<span class="card-stat stability"><span class="lbl">STB</span>&nbsp;'+s+'</span>'+
+      '<span class="card-stat power"><span class="lbl">PWR</span>&nbsp;'+esc(p)+'</span>'+
+      '<span class="card-stat stability"><span class="lbl">STB</span>&nbsp;'+esc(s)+'</span>'+
     '</div>'
   ) : '';
+  const artSrc = safeArtSrc(c.art);
   return '<div class="card-top">'+
-      '<div class="card-name">'+c.name+'</div>'+
+      '<div class="card-name">'+esc(c.name)+'</div>'+
       costBadge+
     '</div>'+
-    '<div class="card-type">'+TYPE_LABEL[c.type]+'</div>'+
-    '<div class="card-art">'+(c.art
-      ? '<img src="'+c.art+'" alt="" loading="lazy">'
-      : '<span class="glyph">'+initialGlyph(c.name)+'</span>')+'</div>'+
+    '<div class="card-type">'+esc(TYPE_LABEL[c.type]||'')+'</div>'+
+    '<div class="card-art">'+(artSrc
+      ? '<img src="'+esc(artSrc)+'" alt="" loading="lazy">'
+      : '<span class="glyph">'+esc(initialGlyph(c.name))+'</span>')+'</div>'+
     statsRow+
-    '<div class="card-rules">'+(c.text&&c.text!=='—'?c.text:'')+'</div>'+
-    '<div class="card-flavor">'+(c.flavor||'')+'</div>';
+    '<div class="card-rules">'+(c.text&&c.text!=='—'?esc(c.text):'')+'</div>'+
+    '<div class="card-flavor">'+esc(c.flavor||'')+'</div>';
 }
 
 function cardHTML(c, ownerKey, context){
@@ -1156,7 +1175,7 @@ function cardHTML(c, ownerKey, context){
     if(isAgent && canDeploy(ownerKey,c)){ clickable=true; onclick="deployCard('"+ownerKey+"','"+c.uid+"')"; }
     else if(!isAgent && canPlayPatch(ownerKey)){ clickable=true; onclick="playPatch('"+ownerKey+"','"+c.uid+"')"; }
   }
-  const classAttr = 'card card-'+c.deckKey+(clickable?' playable':' disabled');
+  const classAttr = 'card card-'+esc(c.deckKey)+(clickable?' playable':' disabled');
   return '<button class="'+classAttr+'" '+(clickable?'onclick="'+onclick+'"':'disabled')+'>'+cardFaceInner(c)+'</button>';
 }
 
@@ -1164,14 +1183,14 @@ function slotHTML(inst, ownerState){
   if(!inst) return '<div class="slot"><div class="slot-empty-label">— empty —</div></div>';
   const p = effPower(inst, ownerState), s = effStability(inst, ownerState);
   const flashClass = (inst.uid===flashUid) ? ' flash' : '';
-  return '<div class="slot filled"><div class="card board card-'+inst.deckKey+flashClass+'">'+
+  return '<div class="slot filled"><div class="card board card-'+esc(inst.deckKey)+flashClass+'">'+
     cardFaceInner(inst, {displayPower:p, displayStability:s})+
   '</div></div>';
 }
 
 // Renders a clickable card face for use inside a picker modal.
 function modalCardHTML(c, index){
-  return '<button class="card card-'+c.deckKey+' playable" onclick="modalPick('+index+')">'+cardFaceInner(c)+'</button>';
+  return '<button class="card card-'+esc(c.deckKey)+' playable" onclick="modalPick('+index+')">'+cardFaceInner(c)+'</button>';
 }
 
 function renderSelect(){
@@ -1180,10 +1199,11 @@ function renderSelect(){
     return '<div class="select-col">'+deckKeys.map(k=>{
       const m = DECK_META[k];
       const sel = pick===k ? ' selected' : '';
-      return '<button class="deck-option deck-'+k+sel+'" onclick="'+setter+"('"+k+"')"+'">'+
-        (m.art ? '<img class="deck-art" src="'+m.art+'" alt="">' : '')+
-        '<div class="dname">'+m.label+' — '+m.tag+'</div>'+
-        '<div class="dblurb">'+m.blurb+'</div>'+
+      const deckArt = safeArtSrc(m.art);
+      return '<button class="deck-option deck-'+esc(k)+sel+'" onclick="'+setter+"('"+k+"')"+'">'+
+        (deckArt ? '<img class="deck-art" src="'+esc(deckArt)+'" alt="">' : '')+
+        '<div class="dname">'+esc(m.label)+' — '+esc(m.tag)+'</div>'+
+        '<div class="dblurb">'+esc(m.blurb)+'</div>'+
       '</button>';
     }).join('')+'</div>';
   }
@@ -1226,7 +1246,7 @@ function renderMatch(){
   if(!state) return '';
   if(state.gameOver){
     return matchBoardHTML() + '<div class="game-over"><h2>'+(state.winner==='A'?'YOU WIN':'OPPONENT WINS')+'</h2>'+
-      '<p>'+label('A')+': '+state.players.A.shipPoints+' — '+label('B')+': '+state.players.B.shipPoints+'</p>'+
+      '<p>'+esc(label('A'))+': '+esc(state.players.A.shipPoints)+' — '+esc(label('B'))+': '+esc(state.players.B.shipPoints)+'</p>'+
       '<button class="start-btn" onclick="backToSelect()">New match</button></div>';
   }
   return matchBoardHTML();
@@ -1243,48 +1263,48 @@ function matchBoardHTML(){
   let modalHTML = '';
   if(modal){
     const hasCards = modal.items.length>0 && modal.items[0].card;
-    modalHTML = '<div class="modal-overlay"><div class="modal-box"><h4>'+modal.title+'</h4>'+
+    modalHTML = '<div class="modal-overlay"><div class="modal-box"><h4>'+esc(modal.title)+'</h4>'+
       (hasCards
         ? '<div class="modal-cards">'+modal.items.map((it,i)=>modalCardHTML(it.card,i)).join('')+'</div>'
-        : modal.items.map((it,i)=>'<button class="modal-opt" onclick="modalPick('+i+')">'+it.label+'</button>').join(''))+
+        : modal.items.map((it,i)=>'<button class="modal-opt" onclick="modalPick('+i+')">'+esc(it.label)+'</button>').join(''))+
     '</div></div>';
   }
 
   const turnBanner = isHotseat
-    ? '<div class="turn-banner deck-'+st.deckKey+'">&#9656; '+hotseatName(activeKey)+"'S TURN"+
-      '<span class="sub">Pass the device — '+DECK_META[st.deckKey].label+' is up</span></div>'
+    ? '<div class="turn-banner deck-'+esc(st.deckKey)+'">&#9656; '+esc(hotseatName(activeKey))+"'S TURN"+
+      '<span class="sub">Pass the device — '+esc(DECK_META[st.deckKey].label)+' is up</span></div>'
     : '';
 
   const scoreLine = isHotseat
-    ? '<div class="score">'+hotseatName('A')+' <b>'+A.shipPoints+'</b> — '+hotseatName('B')+' <b>'+B.shipPoints+'</b> / '+WIN_POINTS+'</div>'
-    : '<div class="score">You <b>'+A.shipPoints+'</b> — Opponent <b>'+B.shipPoints+'</b> / '+WIN_POINTS+'</div>';
+    ? '<div class="score">'+esc(hotseatName('A'))+' <b>'+esc(A.shipPoints)+'</b> — '+esc(hotseatName('B'))+' <b>'+esc(B.shipPoints)+'</b> / '+WIN_POINTS+'</div>'
+    : '<div class="score">You <b>'+esc(A.shipPoints)+'</b> — Opponent <b>'+esc(B.shipPoints)+'</b> / '+WIN_POINTS+'</div>';
 
   let boardRowsHTML;
   if(isHotseat){
     const passiveSt = state.players[passiveKey];
     boardRowsHTML =
-      '<div class="board-row inactive-row"><div class="board-row-label"><span>'+hotseatName(passiveKey)+' ('+DECK_META[passiveSt.deckKey].label+') — waiting</span><span>Deck '+passiveSt.deck.length+' · Hand '+passiveSt.hand.length+' · Discard '+passiveSt.discard.length+'</span></div>'+
+      '<div class="board-row inactive-row"><div class="board-row-label"><span>'+esc(hotseatName(passiveKey))+' ('+esc(DECK_META[passiveSt.deckKey].label)+') — waiting</span><span>Deck '+passiveSt.deck.length+' · Hand '+passiveSt.hand.length+' · Discard '+passiveSt.discard.length+'</span></div>'+
         '<div class="slots">'+slotHTML(passiveSt.primary,passiveSt)+slotHTML(passiveSt.backup,passiveSt)+'</div></div>'+
-      '<div class="board-row active-row deck-'+st.deckKey+'"><div class="board-row-label"><span>&#9656; '+hotseatName(activeKey)+' ('+DECK_META[st.deckKey].label+')</span><span>Deck '+st.deck.length+' · Hand '+st.hand.length+' · Discard '+st.discard.length+'</span></div>'+
+      '<div class="board-row active-row deck-'+esc(st.deckKey)+'"><div class="board-row-label"><span>&#9656; '+esc(hotseatName(activeKey))+' ('+esc(DECK_META[st.deckKey].label)+')</span><span>Deck '+st.deck.length+' · Hand '+st.hand.length+' · Discard '+st.discard.length+'</span></div>'+
         '<div class="slots">'+slotHTML(st.primary,st)+slotHTML(st.backup,st)+'</div></div>';
   } else {
     boardRowsHTML =
-      '<div class="board-row"><div class="board-row-label"><span>Opponent ('+DECK_META[B.deckKey].label+')</span><span>Deck '+B.deck.length+' · Hand '+B.hand.length+' · Discard '+B.discard.length+'</span></div>'+
+      '<div class="board-row"><div class="board-row-label"><span>Opponent ('+esc(DECK_META[B.deckKey].label)+')</span><span>Deck '+B.deck.length+' · Hand '+B.hand.length+' · Discard '+B.discard.length+'</span></div>'+
         '<div class="slots">'+slotHTML(B.primary,B)+slotHTML(B.backup,B)+'</div></div>'+
-      '<div class="board-row"><div class="board-row-label"><span>You ('+DECK_META[A.deckKey].label+')</span><span>Deck '+A.deck.length+' · Hand '+A.hand.length+' · Discard '+A.discard.length+'</span></div>'+
+      '<div class="board-row"><div class="board-row-label"><span>You ('+esc(DECK_META[A.deckKey].label)+')</span><span>Deck '+A.deck.length+' · Hand '+A.hand.length+' · Discard '+A.discard.length+'</span></div>'+
         '<div class="slots">'+slotHTML(A.primary,A)+slotHTML(A.backup,A)+'</div></div>';
   }
 
   const handLabel = isHotseat
-    ? '&#9656; '+hotseatName(activeKey)+"'s hand"
+    ? '&#9656; '+esc(hotseatName(activeKey))+"'s hand"
     : (activeKey==='A' ? 'Your hand' : "Opponent's hand");
-  const handRowClass = isHotseat ? ' active-row deck-'+st.deckKey : '';
+  const handRowClass = isHotseat ? ' active-row deck-'+esc(st.deckKey) : '';
 
-  return (toast ? '<div class="toast">'+toast+'</div>' : '')+
+  return (toast ? '<div class="toast">'+esc(toast)+'</div>' : '')+
     turnBanner+
     '<div class="topbar">'+
       scoreLine+
-      '<div class="turn-indicator">Turn '+st.turnsTaken+' · '+DECK_META[A.deckKey].label+' vs '+DECK_META[B.deckKey].label+(isHotseat?'':' · Active: '+label(activeKey))+'</div>'+
+      '<div class="turn-indicator">Turn '+esc(st.turnsTaken)+' · '+esc(DECK_META[A.deckKey].label)+' vs '+esc(DECK_META[B.deckKey].label)+(isHotseat?'':' · Active: '+esc(label(activeKey)))+'</div>'+
       '<button class="new-match-btn" onclick="backToSelect()">New match</button>'+
     '</div>'+
     '<div class="board-area">'+
@@ -1321,14 +1341,14 @@ function matchBoardHTML(){
             const myStability = effStability(st.primary, st);
             const theirPower = effPower(opp.primary, opp);
             if(theirPower >= myStability){
-              return '<div class="risk-note">⚠ '+opp.primary.name+"'s "+theirPower+' Power meets or beats your '+st.primary.name+"'s "+myStability+' Stability — attacking now will crash it too.</div>';
+              return '<div class="risk-note">⚠ '+esc(opp.primary.name)+"'s "+esc(theirPower)+' Power meets or beats your '+esc(st.primary.name)+"'s "+esc(myStability)+' Stability — attacking now will crash it too.</div>';
             }
             return '';
           })()+
         '</div>'+
       '</div>'+
       '<div class="log-panel"><div class="log-title">System log</div>'+
-        state.log.slice().reverse().map(l=>'<div class="log-line '+l.cls+'">&gt; '+l.msg+'</div>').join('')+
+        state.log.slice().reverse().map(l=>'<div class="log-line '+esc(l.cls)+'">&gt; '+esc(l.msg)+'</div>').join('')+
       '</div>'+
     '</div>'+ modalHTML;
 }
