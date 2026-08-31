@@ -28,7 +28,7 @@ jobs:
           cp index.html _site/
           cp -R art data _site/
           # Keep human docs available next to the game for curious visitors.
-          cp README.md CARDS.md SPEC.md _site/
+          cp README.md SPEC.md _site/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
