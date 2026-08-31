@@ -72,11 +72,12 @@ puts your own Agent at risk regardless of whether your attack lands.
      tanky-but-weak attacker (high Stability, low Power) is safe to swing with even into a
      high-Power target; a glass-cannon attacker (high Power, low Stability) is not.
    - **Crash check**: if your attacker's effective Power ≥ the defender's effective Stability,
-     the defender crashes. Some defensive effects (`coinPreventCrash`, `gracefulOnce`) can cancel
-     this even when the numbers say it should happen.
+     the defender crashes. `coinPreventCrash` can cancel this even when the numbers say it should happen.
+   - **Self-crash coin** (`coinSelfCrash`): after swinging, the attacker flips a coin; Tails crashes
+     itself even if it would otherwise survive. `reroll` (Turn Up The Temperature) loads the next
+     coin this turn so it comes up the favorable face.
    - Both crash checks are independent — a mutual trade (both Agents crash) is possible and common.
-4. A crashed Agent goes to its owner's discard pile, **unless** it has `recycleOnCrash` (goes back
-   into the deck instead) — see **The Duct Tape Fix**.
+4. A crashed Agent goes to its owner's discard pile.
 5. **Breakthrough:** if that combat crash left the opponent with *no Backup* (their last Agent
    just went down), you score **1 Ship Point**. Crashing a Primary while they still have a Backup
    sitting in the other slot does *not* score — that's what extra-attack chaining is for.
@@ -87,6 +88,8 @@ puts your own Agent at risk regardless of whether your attack lands.
 
 `extraAttack` is a charge counter, not a boolean. Playing two extra-attack effects (or combining **Force Push To Prod** / **Just Making Things Up** / **Crunch Mode** with **Ship It**'s on-crash extra swing) stacks. After each swing, if your Primary is empty and you have a Backup, the Backup promotes immediately so the next swing can happen. The opponent's Backup still only auto-promotes at end of turn — that window is how aggro actually scores.
 
+`attackAgainOnCrash` (Latency: **Ship It**, **Silent Timeout**, **The Demo That Worked**, **Foothills of the Singularity**) adds one extra-attack charge when that Agent crashes a defender and survives. **The Subagent Spawnking** (`attackTwiceSelfCrash`) always takes a second swing, then crashes itself.
+
 ### Removal that skips combat entirely
 
 A few Overclocks crash a target directly, without any Power/Stability comparison:
@@ -95,8 +98,9 @@ crashes *both* players' Primaries). These still respect the immunity rule below.
 
 ### Immunity to opponent removal
 
-Cards with `growPerTurnSurvive` (**Sunk Cost Fallacy**) or `sandboxImmune` (**The Sandbox
-Escape**) cannot be bounced, force-swapped, or hard-removed by an *opponent's* targeted effect.
+Cards with `sandboxImmune` (**The Sandbox Escape**, **The Adversarial Example**, **The Fuzzer**,
+**The Ancient Dependency**) cannot be bounced, force-swapped, or hard-removed by an *opponent's*
+targeted effect.
 Combat crashes still work normally against them — the immunity is specifically about being
 picked out by name by an opponent's card, not about combat. A player can still crash their own
 immune card via their own effect (e.g. their own copy of Everything Is Deprecated still crashes
@@ -113,36 +117,19 @@ A card's printed Power/Stability is a floor, not the whole picture. Effective st
 recomputed on the fly from these layers, all of which stack:
 
 - `bonusPower` / `bonusStability` — permanent modifiers from an effect having already fired
-  (e.g. **The Rewrite** growing after a crash, **Model Extraction** copying a stat snapshot).
+  (e.g. **The Rewrite** growing after a crash).
 - `tempPowerBonus` — a *temporary* Power buff that clears automatically at the start of the
-  owner's next turn. This is what every "+3 Power until end of turn" Overclock uses
-  (`tempPowerBuff3`: **Cache Warmup**, **Few-Shot Priming**, **Adversarial Perturbation**,
-  **Crunch Mode**).
+  owner's next turn (`tempPowerBuff3`: **Cache Warmup**, **Few-Shot Priming**, **Adversarial Perturbation**).
 - Discard-pile scalers, recomputed live from the current discard pile size — not snapshotted:
   - `scalePowerDiscard3`: +1 Power per 2 cards in your discard (**Legacy Code**, **Deprecated,
-    Still In Prod**).
-  - `scalePowerByPatchDiscard`: +1 Power per Overclock card specifically in your discard
-    (**Monkey Patch**, **The Vibes-Based Answer**).
-  - `scaleStabilityByDiscard`: +1 Stability per card in your discard (**The Ancient
-    Dependency**).
-  - `scaleBothByDiscard`: +1 Power *and* +1 Stability per 3 cards in your discard (**Compound
-    Interest**).
-  - `growPerTurnSurvive`: +1 Power and +1 Stability per turn the card has survived
-    (**Sunk Cost Fallacy**).
-- In-combat, one-shot modifiers: `attackBonus2` (flat +2 Power on this attack, **The
-  Overconfident Model**), `firstAttackBonus` (+5 Power, only the first time this specific card
-  ever attacks, **The Demo That Worked**).
+    Still In Prod**, **Monkey Patch**, **Compound Interest**, **The Duct Tape Fix**,
+    **The Great Refactor**).
+  - `growOnAnyCrash`: +2 Power whenever any Agent crashes (**The Rewrite**, **Sunk Cost Fallacy**).
 
 ## Turn-start triggers
 
-A few cards do something automatically at the start of their owner's turn, independent of combat:
-
-- `singularityGrowth` (**Foothills of the Singularity**): flip a coin. Heads = double this
-  card's Power, permanently. Tails = it crashes itself. High variance, no ceiling, real downside.
-- `coinGrowSafe` (**Confidence Cascade**): flip a coin. Heads = +1 Power, permanently. Tails =
-  nothing happens. Same shape as Foothills but with the failure case removed — slower, safer.
-- `growPerTurnSurvive` (**Sunk Cost Fallacy**): unconditionally +1/+1 every turn it survives, no
-  coin flip.
+None of the current cards grow at turn start. Combat coins (`coinSelfCrash`, `coinPreventCrash`,
+`coinDoubleOrNothing`) and `reroll` resolve during combat, not at the start of the turn.
 
 ## On-deploy triggers
 
@@ -151,25 +138,19 @@ slot they land in):
 
 | Effect | Card(s) | What happens |
 |---|---|---|
-| `bounceOppPrimary` | The Jailbreak | Opponent's Primary returns to their hand (blocked by immunity). Their Backup, if any, is promoted immediately — bounce is a reroute, not a free empty-board punch unless they had no Backup. |
-| `peekStealCard` | The Charm Exploit | You choose and take 1 card from the opponent's hand |
-| `forceSwapOpp` | Attention Hijack | Opponent's Primary and Backup are force-swapped (blocked by immunity) |
-| `copyOppPrimaryStats` | Model Extraction | This card's effective Power/Stability become a snapshot of the opponent's current Primary |
-| `skipOppDeploy` | The Silent Observer | Opponent's next deploy is blocked |
-| `deployDraw2Discard1` | The Confabulator | Draw 2, then choose 1 to discard |
-| `shuffleDiscardIn` | The Great Refactor | Shuffle discard into deck; this Agent gains +1 Power per 2 cards shuffled in |
+| `bounceOppPrimary` | The Jailbreak, Attention Hijack | Opponent's Primary returns to their hand (blocked by immunity). Their Backup, if any, is promoted immediately — bounce is a reroute, not a free empty-board punch unless they had no Backup. |
+| `peekStealCard` | The Charm Exploit, Model Extraction, The Leaked Checkpoint | You choose and take 1 card from the opponent's hand |
+| `skipOppAttack` | The Silent Observer | Opponent skips their next attack (same flag as the Overclock). |
 | `bonusIfSecondDeploy` | Parallel Rollout | +2 Power if you already deployed another Agent this turn |
-| `bonusIfOverclockedThisTurn` | Zero-Day | +3 Power if you already played an Overclock this turn |
 
 ## Overclock effects (full list)
 
 Overclocks are one-shot: play from hand, resolve immediately, go to discard. One per turn unless
-boosted by `extraDeploy`-adjacent effects. Full effect-key reference:
+an extra-deploy Overclock is also in play that turn. Full effect-key reference:
 
-`attackAgain` (charges stack — two extra-attack effects in one turn really do mean two extra swings; if your Primary crashed on an earlier swing, your Backup promotes immediately so the extra attack has a body. The opponent's Backup still waits until end of turn, so a crash-then-chain can score an unblocked hit), `extraDeploy`, `draw2`, `reroll`, `tempPowerBuff3`, `crashOppPrimary`,
-`mutualCrashPrimaries`, `mutualRandomDiscard`, `skipAttackDraw2`, `skipOppPatch`, `skipOppAttack`,
-`discardOppRandom2Draw1` (one random discard, not two), `drawThenDiscard`, `mulligan`, `look3take1`, `tutor`, `stabilityBuff2`,
-`reclaimCrashed`.
+`attackAgain` (charges stack), `extraDeploy`, `draw2`, `reroll`, `tempPowerBuff3`, `crashOppPrimary`,
+`mutualCrashPrimaries`, `skipOppAttack`, `discardOppRandom2Draw1` (one random discard),
+`look3take1`, `tutor`.
 
 See `data/cards.json` for exact card-to-effect mapping and rules text per card.
 
@@ -177,12 +158,25 @@ See `data/cards.json` for exact card-to-effect mapping and rules text per card.
 
 ## Deck identities
 
-| Deck | Archetype | Color | What it's trying to do |
+Each faction has a **small kit** — a handful of verbs players actually have to remember. Prefer
+remapping a card onto an existing kit verb over adding a new effect key.
+
+| Deck | Archetype | Color | Kit (what to remember) |
 |---|---|---|---|
-| Latency | Aggro | Green `#39FF88` | Fast, fragile, wants to end the game before its low Stability gets punished |
-| Hallucination | Chaos | Red `#FF3355` | Coin-flip variance — can blow out or fizzle completely |
-| Prompt Injection | Interference | Blue `#2F80FF` | Bounces, steals, and reroutes the opponent's board — wins by denial, not just combat |
-| Technical Debt | Scaling | Grayscale `#B8C0C8` | Weak early, discard-pile scaling makes it dangerous if the game runs long |
+| Latency | Aggro | Green `#39FF88` | Haste (`noSummoningSickness`), extra deploy, crash-then-attack-again. Rare: Spawnking attacks twice, then self-crashes. |
+| Hallucination | Chaos | Red `#FF3355` | Two coins: self-crash on tails, or prevent a crash on heads. Reroll (loaded coin) and tutor for consistency. |
+| Prompt Injection | Interference | Blue `#2F80FF` | Bounce, steal from hand, skip their attack, sandbox immunity. |
+| Technical Debt | Scaling | Grayscale `#B8C0C8` | Power from discard size, mill (`look3take1`), crash-grow. Ancient Dependency is sandbox-immune so bounce cannot just reset the pile. |
+
+Shared across all four decks: **AGI** (`coinDoubleOrNothing`), extra-attack Overclocks (`attackAgain`),
+and a +3 Power Overclock (`tempPowerBuff3`).
+
+| Deck | What it's trying to do |
+|---|---|
+| Latency | End the game before low Stability is punished. Extra-deploy into a haste body, then chain extra attacks through an empty Primary. |
+| Hallucination | High-roll coins. Temperature loads the next flip; tutor finds AGI or a prevent-crash body. |
+| Prompt Injection | Win by denial as much as combat — bounce their board, steal their answers, skip their swing. |
+| Technical Debt | Weak early. Mill into discard so scalers hit hard; crash-grow cash-in if the game runs long. |
 
 Faction colors are pure CSS custom properties (`--latency`, `--hallucination`, `--injection`,
 `--techdebt` in `:root`) — every accent-colored UI element (card borders, badges, the turn
@@ -195,8 +189,5 @@ so a palette change is a 4-line edit, not a search-and-replace across the file.
 
 - AI opponent (`aiTakeTurn`) plays a wider set of Overclocks and will skip a swing that would only crash itself — still a heuristic, not a solver.
 - Deck balance is stress-tested with a headless heuristic sim (`scripts/simulate.js`) across all 16 matchup pairs. Re-run after card changes: `node scripts/simulate.js --games 1600 --seed 1`.
-- `hasAttacked` (for `firstAttackBonus`) and `usedGraceful` (for `gracefulOnce`) are per-card-
-  instance one-time flags that never reset — confirm that's intended for cards that get bounced
-  back to hand and redeployed (currently: yes, the flag persists, so a bounced Demo That Worked
-  does *not* get a second "first attack" bonus after redeploying — this is a judgment call worth
-  revisiting).
+- Faction kits should stay small: prefer remapping a card onto an existing faction verb over adding a new effect key.
+- Current unique effect keys in `data/cards.json` should stay in the low twenties, not 40+. Vanilla bodies are allowed.
