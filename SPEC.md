@@ -61,8 +61,7 @@ puts your own Agent at risk regardless of whether your attack lands.
 
 1. Your Primary attacks the opponent's Primary.
 2. **If the opponent has no Primary**, this is an **unblocked hit**: you score **1 Ship Point**
-   immediately and nothing else happens. This is the *only* way to score — crashing an opposing
-   Agent through combat never grants a Ship Point by itself.
+   immediately and nothing else happens.
 3. **If the opponent has a Primary**, resolve in this order:
    - Compute your attacker's effective Power (base + all active modifiers, see
      [Stats](#effective-stats-power--stability) below).
@@ -77,7 +76,11 @@ puts your own Agent at risk regardless of whether your attack lands.
    - Both crash checks are independent — a mutual trade (both Agents crash) is possible and common.
 4. A crashed Agent goes to its owner's discard pile, **unless** it has `recycleOnCrash` (goes back
    into the deck instead) — see **The Duct Tape Fix**.
-5. Crashing (yours or theirs) never scores a Ship Point. Only step 2 (unblocked hit) scores.
+5. **Breakthrough:** if that combat crash left the opponent with *no Backup* (their last Agent
+   just went down), you score **1 Ship Point**. Crashing a Primary while they still have a Backup
+   sitting in the other slot does *not* score — that's what extra-attack chaining is for.
+6. Unblocked hits (step 2) and breakthroughs (step 5) are the only ways to score. Hard-removal
+   Overclocks (`crashOppPrimary`, `mutualCrashPrimaries`) still never score.
 
 ### Extra-attack chaining
 
@@ -147,7 +150,7 @@ slot they land in):
 
 | Effect | Card(s) | What happens |
 |---|---|---|
-| `bounceOppPrimary` | The Jailbreak | Opponent's Primary returns to their hand (blocked by immunity) |
+| `bounceOppPrimary` | The Jailbreak | Opponent's Primary returns to their hand (blocked by immunity). Their Backup, if any, is promoted immediately — bounce is a reroute, not a free empty-board punch unless they had no Backup. |
 | `peekStealCard` | The Charm Exploit | You choose and take 1 card from the opponent's hand |
 | `forceSwapOpp` | Attention Hijack | Opponent's Primary and Backup are force-swapped (blocked by immunity) |
 | `copyOppPrimaryStats` | Model Extraction | This card's effective Power/Stability become a snapshot of the opponent's current Primary |

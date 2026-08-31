@@ -249,6 +249,10 @@ class Game {
         if (this.stats) this.stats.bounces[ownerKey]++;
         oppSt.hand.push(oppSt.primary);
         oppSt.primary = null;
+        if (oppSt.backup) {
+          oppSt.primary = oppSt.backup;
+          oppSt.backup = null;
+        }
       }
     }
     if (card.effect === "peekStealCard") {
@@ -510,6 +514,19 @@ class Game {
     if (attackerDied) this.crashOwnCard(activeKey, attacker);
     if (crashes) {
       this.crashOwnCard(passiveKey, defender);
+      if (!defState.backup && !this.state.gameOver) {
+        atkState.shipPoints++;
+        this.addLog(activeKey + " breakthrough " + atkState.shipPoints);
+        if (this.stats) {
+          this.stats.scores[activeKey].push({
+            turn: atkState.turnsTaken,
+            attacker: attacker.name,
+            points: atkState.shipPoints,
+            kind: "breakthrough",
+          });
+        }
+        this.checkWin();
+      }
       if (attacker.effect === "drawOnCrash") this.drawCards(atkState, 1);
       if (attacker.effect === "attackAgainOnCrash" && !attackerDied) {
         atkState.extraAttack = (atkState.extraAttack || 0) + 1;
@@ -660,9 +677,10 @@ class Game {
       return false;
     }
     if (pv.crashDef && !pv.crashAtk) return true;
+    if (pv.crashDef && !opp.backup) return true; // breakthrough score
     if (pv.crashDef && pv.crashAtk) {
       // Trade. Take it if we have a backup, opponent is ahead, or Ship It might chain
-      // (Ship It dies so no chain). Prefer trade if they have no backup (next turn we might score)
+      // (Ship It dies so no chain). Prefer trade if they have no backup (breakthrough)
       // or we have backup.
       if (st.backup) return true;
       if (!opp.backup) return true;
@@ -721,8 +739,8 @@ class Game {
     if (emptyPrimary) s += 3;
     if (card.effect === "noSummoningSickness" && emptyPrimary) s += 6;
     if (card.effect === "bounceOppPrimary" && opp.primary && !isImmuneToOppRemoval(opp.primary)) {
-      s += 8 + effPower(opp.primary, opp);
-      if (st.primary && this.canAttackWithExisting(key)) s += 12;
+      s += 4 + Math.min(6, effPower(opp.primary, opp));
+      if (!opp.backup && st.primary && this.canAttackWithExisting(key)) s += 12;
     }
     if (card.effect === "peekStealCard" && opp.hand.length > 0) s += 5;
     if (card.effect === "forceSwapOpp" && opp.primary && opp.backup) {

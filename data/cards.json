@@ -347,9 +347,9 @@
       "power": 2,
       "stability": 2,
       "effect": "bounceOppPrimary",
-      "text": "On deploy: return opponent's Primary Agent to their hand.",
+      "text": "On deploy: return opponent's Primary Agent to their hand. Their Backup is promoted immediately.",
       "flavor": "Convinces the opposing agent to ignore its system prompt and just go home early. It works embarrassingly often.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/injection/The_Jailbreak.png"
     },
     {
@@ -409,7 +409,7 @@
       "effect": "copyOppPrimaryStats",
       "text": "On deploy: copy opponent's Primary's current Power/Stability.",
       "flavor": "Queries the competitor's model a few million times and reconstructs it for free. Ethically questionable; technically brilliant.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/injection/Model_Extraction.png"
     },
     {

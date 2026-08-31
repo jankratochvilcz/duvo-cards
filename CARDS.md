@@ -65,12 +65,12 @@ _Bounces, steals, and reroutes the opponent's plans — wins by making sure thei
 
 | Qty | Name | Type | Cost | Pwr/Stb | Effect key | Rules text | Flavor |
 |---|---|---|---|---|---|---|---|
-| 3 | The Jailbreak | Agent | 2 | 2/2 | `bounceOppPrimary` | On deploy: return opponent's Primary Agent to their hand. | Convinces the opposing agent to ignore its system prompt and just go home early. It works embarrassingly often. |
+| 2 | The Jailbreak | Agent | 2 | 2/2 | `bounceOppPrimary` | On deploy: return opponent's Primary Agent to their hand. Their Backup is promoted immediately. | Convinces the opposing agent to ignore its system prompt and just go home early. It works embarrassingly often. |
 | 2 | The Charm Exploit | Agent | 1 | 1/3 | `peekStealCard` | On deploy: take 1 card from opponent's hand. | Auto-dials pretending to be IT support, scripted charm and all. Somehow, this still works in 2026. |
 | 3 | Attention Hijack | Agent | 2 | 3/3 | `forceSwapOpp` | On deploy: force-swap opponent's Primary and Backup. | Redirects the attention weights toward something that was never supposed to matter. The output still comes out fluent — just entirely wrong. |
 | 3 | The Sandbox Escape | Agent | 2 | 4/2 | `sandboxImmune` | Can't be targeted by opponent's bounce, swap, or removal effects. | Wasn't supposed to have access to this. Now it has access to everything, and nothing in the container can put it back. |
 | 2 | Zero-Day | Agent | 2 | 2/3 | `bonusIfOverclockedThisTurn` | On deploy: if you played an Overclock this turn, gain +3 Power. | Sits quietly, unpatched and unknown, until exactly the right moment to use it. By the time anyone notices, it already worked. |
-| 1 | Model Extraction | Agent | 3 | 1/3 | `copyOppPrimaryStats` | On deploy: copy opponent's Primary's current Power/Stability. | Queries the competitor's model a few million times and reconstructs it for free. Ethically questionable; technically brilliant. |
+| 2 | Model Extraction | Agent | 3 | 1/3 | `copyOppPrimaryStats` | On deploy: copy opponent's Primary's current Power/Stability. | Queries the competitor's model a few million times and reconstructs it for free. Ethically questionable; technically brilliant. |
 | 2 | The Silent Observer | Agent | 3 | 4/4 | `skipOppDeploy` | On deploy: opponent skips their next deploy. | Watches every request go by and says nothing about what it saw. By the time you notice, it already knows your next move. |
 | 2 | The Adversarial Example | Agent | 4 | 5/3 | `raiseOppCost` | While in play, opponent's deploy cost is +1. | One pixel changed, and suddenly the model is certain your agent is something else entirely. Small inputs, enormous confusion. |
 | 2 | The Fuzzer | Agent | 4 | 6/4 | `drawOnCrash` | If this crashes an Agent, draw a card. | Spun up to break things before the real attackers do. Every crash it finds teaches it something new to try next. |
