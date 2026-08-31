@@ -87,7 +87,7 @@ _Bounces, steals, and reroutes the opponent's plans — wins by making sure thei
 _Weak early, dangerous if the game runs long._
 
 
-**30 cards.**
+**29 cards.**
 
 
 | Qty | Name | Type | Cost | Pwr/Stb | Effect key | Rules text | Flavor |
@@ -102,7 +102,7 @@ _Weak early, dangerous if the game runs long._
 | 2 | The Rewrite | Agent | 4 | 6/5 | `growOnAnyCrash` | +2 Power permanently whenever any Agent crashes. | This time it will be different, everyone promises. It gets stronger with every failure it watches, and there are a lot of failures. |
 | 1 | The Ancient Dependency | Agent | 4 | 3/6 | `scaleStabilityByDiscard` | +1 Stability per card in your discard. | Nobody remembers installing it and nobody is brave enough to remove it. It has quietly held the whole thing up for a decade. |
 | 2 | Ship It And See | Overclock | — | — | `drawThenDiscard` | Draw 1, then discard 1. | The most rigorous testing methodology available to a team with no time left. Production is the test suite now. |
-| 2 | We'll Fix It Later | Overclock | — | — | `mulligan` | Discard your hand, draw that many. | A promise made in good faith and broken by every sprint since. 'Later' has never once arrived on schedule. |
+| 1 | We'll Fix It Later | Overclock | — | — | `mulligan` | Discard your hand, draw that many. | A promise made in good faith and broken by every sprint since. 'Later' has never once arrived on schedule. |
 | 3 | TODO: Refactor This | Overclock | — | — | `look3take1` | Look at top 3 of deck, take 1, discard rest. | Left in the code by someone who no longer works here. Still technically an open task; nobody is closing it. |
 | 1 | Everything Is Deprecated | Overclock | — | — | `mutualCrashPrimaries` | Crash both players' Primary Agents. | The migration finally reaches production, and it takes down the old system and the new one with it. A clean slate, technically. |
 | 1 | Crunch Mode | Overclock | — | — | `attackAgain` | Your Agent attacks again this turn. | Three engineers, one deadline, zero sleep. Astonishingly, for one night, they ship twice. |

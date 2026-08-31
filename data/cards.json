@@ -642,7 +642,7 @@
       "effect": "mulligan",
       "text": "Discard your hand, draw that many.",
       "flavor": "A promise made in good faith and broken by every sprint since. 'Later' has never once arrived on schedule.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/techdebt/Well_Fix_It_Later.png"
     },
     {
@@ -669,7 +669,7 @@
       "effect": "attackAgain",
       "text": "Your Agent attacks again this turn.",
       "flavor": "Three engineers, one deadline, zero sleep. Astonishingly, for one night, they ship twice.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/techdebt/Crunch_Mode.png"
     },
     {
