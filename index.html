@@ -502,7 +502,8 @@ function promptDiscardOne(ownerKey){
 }
 
 function canPlayPatch(ownerKey){
-  return state.players[ownerKey].patchesRemaining>0;
+  const st = state.players[ownerKey];
+  return st.patchesRemaining>0 && !st.attackedThisTurn;
 }
 
 function playPatch(ownerKey, uid){
@@ -767,6 +768,7 @@ function doOneAttack(activeKey){
 
 function performAttack(activeKey){
   const st = state.players[activeKey];
+  st.patchesRemaining = 0;
   if(st.skipAttackThisTurn){ addLog(label(activeKey)+' skips their attack this turn.'); return; }
   const attackerRef = st.primary;
   if(attackerRef && attackerRef.deployedTurn === st.turnsTaken && attackerRef.effect!=='noSummoningSickness'){
@@ -806,7 +808,7 @@ function startTurn(key){
   else st.deploysRemaining = 1;
 
   if(st.skipNextPatch){ st.patchesRemaining=0; st.skipNextPatch=false; addLog(label(key)+"'s Overclock is blocked this turn."); }
-  else st.patchesRemaining = 1;
+  else st.patchesRemaining = 2;
 
   if(st.skipNextAttack){ st.skipAttackThisTurn=true; st.skipNextAttack=false; addLog(label(key)+"'s attack is blocked this turn."); }
   else st.skipAttackThisTurn = false;
@@ -1078,7 +1080,7 @@ function renderSelect(){
         '<li><b>Goal:</b> first to '+WIN_POINTS+' Ship Points wins. You score with an unblocked hit (they have no Primary) or a breakthrough (you crash their last Agent and they have no Backup).</li>'+
         '<li><b>Board:</b> each player has a Primary and a Backup Agent slot. Deploy Agents and play Overclocks from a 30-card deck.</li>'+
         '<li><b>Combat:</b> attacking is optional and risky. Your Primary hits theirs; if their Power meets your Stability, you crash too. Crashing their last Agent (no Backup) is a breakthrough and scores; crashing through a Backup does not.</li>'+
-        '<li><b>Turn:</b> draw → optionally deploy &amp; Overclock → optionally Attack → End Turn. New Agents can\'t attack the turn they deploy.</li>'+
+        '<li><b>Turn:</b> draw → deploy &amp; Overclock (up to 2 Overclocks, before Attack) → optionally Attack → End Turn. New Agents can\'t attack the turn they deploy.</li>'+
       '</ul>'+
     '</div>'+
     '<div class="select-grid">'+
@@ -1100,7 +1102,7 @@ function rulesHTML(){
     '<h4>Each turn</h4><ol>'+
       '<li>Draw 1 card.</li>'+
       '<li>Optionally deploy 1 Agent into an empty slot (Cost ≤ current turn number, capped at 4). A newly deployed Agent can\'t attack the turn it comes online.</li>'+
-      '<li>Optionally play 1 Overclock — any time during your own turn, before or after deploying. One per turn.</li>'+
+      '<li>Optionally play up to 2 Overclocks — any time on your turn before you Attack, before or after deploying.</li>'+
       "<li>Attacking is optional and happens at most once per turn (click Attack). Your Primary attacks their Primary: Power &ge; Stability crashes their Agent. If they had no Backup, that's a breakthrough and you score a Ship Point. An unblocked hit (they have no Primary at all) also scores. Extra attacks can punch through after a crash, because their Backup does not promote until end of turn.</li>"+
       "<li><b>Attacking is a risk:</b> if the defending Agent's Power meets or beats your attacker's own Stability, your Agent crashes too — even if your attack also crashed theirs. A high-Stability Agent is safer to attack with than a high-Power one with no defense.</li>"+
       "<li>If a Primary is empty at the end of a turn, that player's Backup is automatically promoted into Primary.</li>"+
@@ -1181,7 +1183,7 @@ function matchBoardHTML(){
         boardRowsHTML+
         '<div class="hand-row'+handRowClass+'">'+
           '<div class="board-row-label"><span>'+handLabel+'</span><span>Deploys left '+st.deploysRemaining+' · Overclocks left '+st.patchesRemaining+'</span></div>'+
-          '<div class="hand-hint">Overclocks can be played any time on your turn — before or after deploying. 1 per turn.</div>'+
+          '<div class="hand-hint">Overclocks: up to 2 per turn, before you Attack. Play them as setup, then swing.</div>'+
           '<div class="hand-cards">'+
             (activeKey==='A' || mode==='hotseat'
               ? st.hand.map(c=>cardHTML(c, activeKey, 'hand-human')).join('')
