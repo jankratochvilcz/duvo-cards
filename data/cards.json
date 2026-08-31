@@ -187,7 +187,7 @@
       "type": "process",
       "cost": 1,
       "power": 4,
-      "stability": 2,
+      "stability": 3,
       "effect": "coinSelfCrash",
       "text": "Coin flip on attack: Tails = crashes itself.",
       "flavor": "Agrees with everything, including things that aren't true. Half the time it's right, and it has no idea which half.",
@@ -235,7 +235,7 @@
       "type": "process",
       "cost": 3,
       "power": 5,
-      "stability": 3,
+      "stability": 4,
       "effect": "coinSelfCrash",
       "text": "Coin flip on attack: Tails = crashes itself.",
       "flavor": "Fills in the gaps in its memory with something that sounds close enough. Nobody checks the gaps until it's too late.",
@@ -397,7 +397,7 @@
       "effect": null,
       "text": "—",
       "flavor": "Sits quietly, unpatched and unknown, until exactly the right moment to use it. By the time anyone notices, it already worked.",
-      "count": 3,
+      "count": 4,
       "art": "art/cards/injection/Zero-Day.png"
     },
     {
@@ -440,7 +440,7 @@
       "name": "The Fuzzer",
       "type": "process",
       "cost": 4,
-      "power": 6,
+      "power": 5,
       "stability": 4,
       "effect": "sandboxImmune",
       "text": "Can't be targeted by opponent's bounce, swap, or removal effects.",
@@ -490,7 +490,7 @@
       "effect": "tempPowerBuff3",
       "text": "Your Primary gets +3 Power until end of turn.",
       "flavor": "Nudges the weights just enough, just this once, to get the answer you wanted this turn. Revert it quietly before anyone runs the eval again.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/injection/Adversarial_Perturbation.png"
     },
     {
@@ -576,7 +576,7 @@
       "effect": null,
       "text": "—",
       "flavor": "Still writes every pull request by hand at 2am, no agent, no autocomplete, no faith in any of it. Slow and stubborn, and somehow never the one whose code breaks in production.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/techdebt/The_Faithless.png"
     },
     {
@@ -624,7 +624,7 @@
       "effect": "sandboxImmune",
       "text": "Can't be targeted by opponent's bounce, swap, or removal effects.",
       "flavor": "Nobody remembers installing it and nobody is brave enough to remove it. It has quietly held the whole thing up for a decade.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/techdebt/The_Ancient_Dependency.png"
     },
     {
