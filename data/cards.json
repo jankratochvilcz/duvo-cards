@@ -191,7 +191,7 @@
       "effect": "coinSelfCrash",
       "text": "Coin flip on attack: Tails = crashes itself.",
       "flavor": "Agrees with everything, including things that aren't true. Half the time it's right, and it has no idea which half.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/hallucination/The_Yes-Man_Model.png"
     },
     {
@@ -227,7 +227,7 @@
       "effect": "coinPreventCrash",
       "text": "When it would crash: flip a coin, Heads = prevented.",
       "flavor": "Page 47, right there, it swears. There is no page 47 — and you can't quite prove it wrong the first time you try.",
-      "count": 2,
+      "count": 3,
       "art": "art/cards/hallucination/The_Phantom_Reference.png"
     },
     {
@@ -454,7 +454,7 @@
       "effect": "discardOppRandom2Draw1",
       "text": "Opponent discards 1 random card; you draw 1.",
       "flavor": "Quietly copies everything before anyone notices the connection. What's theirs is now also yours.",
-      "count": 3,
+      "count": 4,
       "art": "art/cards/injection/Exfiltrate_Data.png"
     },
     {
@@ -463,7 +463,7 @@
       "effect": "skipOppAttack",
       "text": "Opponent skips their next attack.",
       "flavor": "Slips a new instruction into the context window before the real one arrives. The agent never knows it was not asked.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/injection/Inject_Instruction.png"
     },
     {
@@ -472,7 +472,7 @@
       "effect": "skipOppAttack",
       "text": "Opponent skips their next attack.",
       "flavor": "Floods the endpoint with garbage until nothing real gets through. Crude, deeply illegal, extremely effective.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/injection/Denial_Of_Service.png"
     },
     {
@@ -481,7 +481,7 @@
       "effect": "crashOppPrimary",
       "text": "Crash opponent's Primary Agent immediately. No combat, no Ship Point.",
       "flavor": "The nuclear option. No warning, no graceful shutdown, no chance to save state — it's just gone.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/injection/Kill_-9.png"
     },
     {
@@ -490,7 +490,7 @@
       "effect": "tempPowerBuff3",
       "text": "Your Primary gets +3 Power until end of turn.",
       "flavor": "Nudges the weights just enough, just this once, to get the answer you wanted this turn. Revert it quietly before anyone runs the eval again.",
-      "count": 3,
+      "count": 5,
       "art": "art/cards/injection/Adversarial_Perturbation.png"
     },
     {
