@@ -87,7 +87,7 @@ _Bounces, steals, and reroutes the opponent's plans — wins by making sure thei
 _Weak early, dangerous if the game runs long._
 
 
-**29 cards.**
+**30 cards.**
 
 
 | Qty | Name | Type | Cost | Pwr/Stb | Effect key | Rules text | Flavor |
@@ -105,6 +105,6 @@ _Weak early, dangerous if the game runs long._
 | 1 | We'll Fix It Later | Overclock | — | — | `mulligan` | Discard your hand, draw that many. | A promise made in good faith and broken by every sprint since. 'Later' has never once arrived on schedule. |
 | 3 | TODO: Refactor This | Overclock | — | — | `look3take1` | Look at top 3 of deck, take 1, discard rest. | Left in the code by someone who no longer works here. Still technically an open task; nobody is closing it. |
 | 1 | Everything Is Deprecated | Overclock | — | — | `mutualCrashPrimaries` | Crash both players' Primary Agents. | The migration finally reaches production, and it takes down the old system and the new one with it. A clean slate, technically. |
-| 1 | Crunch Mode | Overclock | — | — | `attackAgain` | Your Agent attacks again this turn. | Three engineers, one deadline, zero sleep. Astonishingly, for one night, they ship twice. |
+| 2 | Crunch Mode | Overclock | — | — | `attackAgain` | Your Agent attacks again this turn. | Three engineers, one deadline, zero sleep. Astonishingly, for one night, they ship twice. |
 | 1 | AGI | Agent (Rare) | 4 | 8/6 | `coinDoubleOrNothing` | Flip a coin: Heads = double Power. Tails = does nothing. | Ask ten researchers when it arrives and get eleven different answers. When it finally shows up, it is either everything or absolutely nothing. |
 | 1 | Sunk Cost Fallacy | Agent (Rare) | 3 | 4/4 | `growPerTurnSurvive` | Can't be removed by opponent effects. +1/+1 for each turn survived. | Too much has already been invested to stop now, surely. Every extra turn just makes that argument harder to walk away from. |
