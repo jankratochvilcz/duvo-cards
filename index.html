@@ -97,7 +97,7 @@ button:focus-visible, .card:focus-visible{outline:2px solid var(--gold);outline-
 
 .hand-row{background:var(--fog);border:1px solid var(--line);border-radius:10px;padding:12px;}
 .hand-hint{font-family:var(--mono);font-size:10px;color:var(--muted);margin:-2px 0 8px;}
-.hand-cards{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;align-items:flex-start;}
+.hand-cards{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;}
 
 /* TCG-format card: fixed portrait ratio, ~5:7, like a physical trading card */
 .card{position:relative;flex:0 0 168px;width:168px;height:250px;background:var(--fog2);
