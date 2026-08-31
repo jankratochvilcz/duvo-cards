@@ -98,8 +98,9 @@ crashes *both* players' Primaries). These still respect the immunity rule below.
 
 ### Immunity to opponent removal
 
-Cards with `sandboxImmune` (**The Sandbox Escape**, **The Adversarial Example**, **The Fuzzer**)
-cannot be bounced, force-swapped, or hard-removed by an *opponent's* targeted effect.
+Cards with `sandboxImmune` (**The Sandbox Escape**, **The Adversarial Example**, **The Fuzzer**,
+**The Ancient Dependency**) cannot be bounced, force-swapped, or hard-removed by an *opponent's*
+targeted effect.
 Combat crashes still work normally against them — the immunity is specifically about being
 picked out by name by an opponent's card, not about combat. A player can still crash their own
 immune card via their own effect (e.g. their own copy of Everything Is Deprecated still crashes
@@ -116,13 +117,13 @@ A card's printed Power/Stability is a floor, not the whole picture. Effective st
 recomputed on the fly from these layers, all of which stack:
 
 - `bonusPower` / `bonusStability` — permanent modifiers from an effect having already fired
-  (e.g. **The Rewrite** growing after a crash, **The Great Refactor** snapshotting shuffled cards).
+  (e.g. **The Rewrite** growing after a crash).
 - `tempPowerBonus` — a *temporary* Power buff that clears automatically at the start of the
   owner's next turn (`tempPowerBuff3`: **Cache Warmup**, **Few-Shot Priming**, **Adversarial Perturbation**).
 - Discard-pile scalers, recomputed live from the current discard pile size — not snapshotted:
   - `scalePowerDiscard3`: +1 Power per 2 cards in your discard (**Legacy Code**, **Deprecated,
-    Still In Prod**, **Monkey Patch**, **Compound Interest**, **The Ancient Dependency**,
-    **The Duct Tape Fix**).
+    Still In Prod**, **Monkey Patch**, **Compound Interest**, **The Duct Tape Fix**,
+    **The Great Refactor**).
   - `growOnAnyCrash`: +2 Power whenever any Agent crashes (**The Rewrite**, **Sunk Cost Fallacy**).
 
 ## Turn-start triggers
@@ -140,7 +141,6 @@ slot they land in):
 | `bounceOppPrimary` | The Jailbreak, Attention Hijack | Opponent's Primary returns to their hand (blocked by immunity). Their Backup, if any, is promoted immediately — bounce is a reroute, not a free empty-board punch unless they had no Backup. |
 | `peekStealCard` | The Charm Exploit, Model Extraction, The Leaked Checkpoint | You choose and take 1 card from the opponent's hand |
 | `skipOppAttack` | The Silent Observer | Opponent skips their next attack (same flag as the Overclock). |
-| `shuffleDiscardIn` | The Great Refactor | Shuffle discard into deck; this Agent gains +1 Power per 2 cards shuffled in |
 | `bonusIfSecondDeploy` | Parallel Rollout | +2 Power if you already deployed another Agent this turn |
 
 ## Overclock effects (full list)
@@ -166,7 +166,7 @@ remapping a card onto an existing kit verb over adding a new effect key.
 | Latency | Aggro | Green `#39FF88` | Haste (`noSummoningSickness`), extra deploy, crash-then-attack-again. Rare: Spawnking attacks twice, then self-crashes. |
 | Hallucination | Chaos | Red `#FF3355` | Two coins: self-crash on tails, or prevent a crash on heads. Reroll (loaded coin) and tutor for consistency. |
 | Prompt Injection | Interference | Blue `#2F80FF` | Bounce, steal from hand, skip their attack, sandbox immunity. |
-| Technical Debt | Scaling | Grayscale `#B8C0C8` | Power from discard size, mill (`look3take1`), crash-grow. The Great Refactor shuffles discard back. |
+| Technical Debt | Scaling | Grayscale `#B8C0C8` | Power from discard size, mill (`look3take1`), crash-grow. Ancient Dependency is sandbox-immune so bounce cannot just reset the pile. |
 
 Shared across all four decks: **AGI** (`coinDoubleOrNothing`), extra-attack Overclocks (`attackAgain`),
 and a +3 Power Overclock (`tempPowerBuff3`).
