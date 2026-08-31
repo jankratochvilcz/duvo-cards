@@ -72,9 +72,10 @@ function expand(list, deckKey) {
   return out;
 }
 
-function newPlayerState(deckKey, rng) {
+function newPlayerState(deckKey, rng, extraCard) {
   const deck = shuffle(expand(CARDS[deckKey], deckKey), rng);
-  const hand = deck.splice(0, 5);
+  const handSize = extraCard ? 6 : 5;
+  const hand = deck.splice(0, handSize);
   return {
     deckKey, deck, hand, discard: [],
     primary: null, backup: null,
@@ -120,7 +121,7 @@ class Game {
     this.stats = stats;
     this.attacks = { attempted: 0, skipped: 0, unblocked: 0, trades: 0, crashesOnly: 0, diedOnly: 0, fizzled: 0 };
     this.state = {
-      players: { A: newPlayerState(deckA, rng), B: newPlayerState(deckB, rng) },
+      players: { A: newPlayerState(deckA, rng, false), B: newPlayerState(deckB, rng, true) },
       active: "A",
       log: [],
       gameOver: false,

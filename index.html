@@ -376,7 +376,7 @@ const DECK_TEMPLATES = {
       art:'art/cards/injection/Model_Extraction.png'},
     {name:'The Silent Observer', type:'process', cost:3, power:4, stability:4, effect:'skipOppDeploy',
       text:'On deploy: opponent skips their next deploy.',
-      flavor:'Watches every request go by and says nothing about what it saw. By the time you notice, it already knows your next move.', count:2,
+      flavor:'Watches every request go by and says nothing about what it saw. By the time you notice, it already knows your next move.', count:1,
       art:'art/cards/injection/The_Silent_Observer.png'},
     {name:'The Adversarial Example', type:'process', cost:4, power:5, stability:3, effect:'raiseOppCost',
       text:'While in play, opponent\'s deploy cost is +1.',
@@ -396,7 +396,7 @@ const DECK_TEMPLATES = {
       art:'art/cards/injection/Inject_Instruction.png'},
     {name:'Denial Of Service', type:'patch', effect:'skipOppAttack',
       text:'Opponent skips their next attack.',
-      flavor:'Floods the endpoint with garbage until nothing real gets through. Crude, deeply illegal, extremely effective.', count:1,
+      flavor:'Floods the endpoint with garbage until nothing real gets through. Crude, deeply illegal, extremely effective.', count:2,
       art:'art/cards/injection/Denial_Of_Service.png'},
     {name:'Kill -9', type:'patch', effect:'crashOppPrimary',
       text:'Crash opponent\'s Primary Agent immediately. No combat, no Ship Point.',
@@ -416,23 +416,23 @@ const DECK_TEMPLATES = {
       art:'art/cards/injection/The_Leaked_Checkpoint.png'},
   ],
   techdebt: [
-    {name:'Legacy Code', type:'process', cost:1, power:2, stability:3, effect:'scalePowerDiscard3',
+    {name:'Legacy Code', type:'process', cost:1, power:3, stability:3, effect:'scalePowerDiscard3',
       text:'+1 Power per 3 cards in your discard.',
       flavor:'Written in a language nobody on the team still knows. It gets scarier the longer it survives.', count:3,
       art:'art/cards/techdebt/Legacy_Code.png'},
-    {name:'The Duct Tape Fix', type:'process', cost:1, power:2, stability:1, effect:'recycleOnCrash',
+    {name:'The Duct Tape Fix', type:'process', cost:1, power:2, stability:2, effect:'recycleOnCrash',
       text:'When this crashes, it goes back into your deck instead of the discard.',
       flavor:'Held together by a comment that says \'temporary\' and a commit from three years ago. When it finally crashes, it\'s fine — it\'ll just turn up again later.', count:3,
       art:'art/cards/techdebt/The_Duct_Tape_Fix.png'},
-    {name:'Monkey Patch', type:'process', cost:2, power:3, stability:3, effect:'scalePowerByPatchDiscard',
+    {name:'Monkey Patch', type:'process', cost:2, power:4, stability:3, effect:'scalePowerByPatchDiscard',
       text:'+1 Power per Overclock card in your discard.',
       flavor:'Overwrites the behavior of something it does not own and never asked permission for. Works great, until the day it does not.', count:2,
       art:'art/cards/techdebt/Monkey_Patch.png'},
-    {name:'Compound Interest', type:'process', cost:3, power:2, stability:2, effect:'scaleBothByDiscard',
+    {name:'Compound Interest', type:'process', cost:3, power:2, stability:3, effect:'scaleBothByDiscard',
       text:'+1 Power and +1 Stability for every 3 cards in your discard.',
       flavor:'Small at first, easy to ignore, technically manageable. Nobody budgeted for what it costs once it\'s had time to compound.', count:1,
       art:'art/cards/techdebt/Compound_Interest.png'},
-    {name:'The Faithless', type:'process', cost:2, power:2, stability:5, effect:null,
+    {name:'The Faithless', type:'process', cost:2, power:3, stability:5, effect:null,
       text:'—',
       flavor:'Still writes every pull request by hand at 2am, no agent, no autocomplete, no faith in any of it. Slow and stubborn, and somehow never the one whose code breaks in production.', count:2,
       art:'art/cards/techdebt/The_Faithless.png'},
@@ -517,9 +517,9 @@ function shuffle(arr){
   return a;
 }
 
-function newPlayerState(deckKey){
+function newPlayerState(deckKey, extraCard){
   const deck = shuffle(expand(DECK_TEMPLATES[deckKey], deckKey));
-  const hand = deck.splice(0,5);
+  const hand = deck.splice(0, extraCard ? 6 : 5);
   return {
     deckKey, deck, hand, discard:[],
     primary:null, backup:null,
@@ -533,7 +533,7 @@ function newPlayerState(deckKey){
 
 function startMatch(){
   state = {
-    players:{A:newPlayerState(pickA), B:newPlayerState(pickB)},
+    players:{A:newPlayerState(pickA, false), B:newPlayerState(pickB, true)},
     active:'A',
     log:[],
     gameOver:false, winner:null,

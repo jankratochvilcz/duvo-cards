@@ -15,7 +15,8 @@ treat this as ground truth for *current* behavior — and update it in the same 
 - Each player picks one of the four decks (see `CARDS.md` / `data/cards.json`).
 - Each player has two **Agent slots**: **Primary** and **Backup**.
 - Each player starts at **0 Ship Points**. First to **5** wins.
-- Starting hand: 5 cards, drawn from the top of a shuffled 30-card deck.
+- Starting hand: 5 cards, drawn from the top of a shuffled 30-card deck. The second player
+  draws 1 extra card before the match begins (6-card opening hand) to offset first-turn haste.
 - If a player cannot draw a card on their own turn (deck-out), they lose immediately.
 
 ## Turn structure
