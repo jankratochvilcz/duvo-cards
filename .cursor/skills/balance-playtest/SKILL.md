@@ -12,7 +12,7 @@ SHIP IT is a 4-faction, 30-card, first-to-5 card battler. Card data lives in **o
 - Round-robin win rates clustered around 50% (a ~10-point band is the target; 50-point spreads are broken).
 - Most games end on **Ship Points**, not deck-out.
 - Each faction keeps a distinct playstyle and at least one rare dominate combo. Do not flatten everything to vanilla stats.
-- Every deck stays **exactly 30 cards**, with a real mix of Agents (`type: "process"`) and Overclocks (`type: "patch"`). Current shape is 21 / 9.
+- Every deck stays **exactly 30 cards**, with a real mix of Agents (`type: "process"`) and Overclocks (`type: "patch"`). Current shape is **18 Agents / 12 Overclocks**. You may play **2 Overclocks per turn**, only before Attack.
 
 Read `SPEC.md` before changing a rule. If code and spec disagree, the code is probably right — update the spec in the same PR.
 

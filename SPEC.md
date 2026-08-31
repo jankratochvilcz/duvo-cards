@@ -29,8 +29,9 @@ strict phase order except "draw happens first"):
    Backup). Cost gate: an Agent's Cost must be ≤ `min(turnsTaken, 4)` — i.e. a Cost-3 card can't
    be deployed before your 3rd turn, and the cap tops out at turn 4 (nothing above Cost 4 exists).
    Some Overclocks grant an extra deploy this turn (see `extraDeploy`).
-3. **Overclock** (optional) — play 1 Overclock from hand, any time before or after deploying.
-   Exactly one per turn unless boosted.
+3. **Overclock** (optional) — play up to **2** Overclocks from hand, any time before or after
+   deploying, but **only before you Attack**. After you click Attack, Overclocks are done for
+   the turn. You can still Overclock and then End Turn without attacking.
 4. **Attack** (optional) — click Attack once per turn. This is a genuine choice, not automatic;
    see [Combat](#combat) below for what happens and why it's risky.
 5. **End Turn** — always available, whether or not you attacked.
@@ -145,8 +146,8 @@ slot they land in):
 
 ## Overclock effects (full list)
 
-Overclocks are one-shot: play from hand, resolve immediately, go to discard. One per turn unless
-an extra-deploy Overclock is also in play that turn. Full effect-key reference:
+Overclocks are one-shot: play from hand, resolve immediately, go to discard. Up to two per turn,
+and only before you Attack. Full effect-key reference:
 
 `attackAgain` (charges stack), `extraDeploy`, `draw2`, `reroll`, `tempPowerBuff3`, `crashOppPrimary`,
 `mutualCrashPrimaries`, `skipOppAttack`, `discardOppRandom2Draw1` (one random discard),

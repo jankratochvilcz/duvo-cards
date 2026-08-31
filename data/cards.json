@@ -33,7 +33,7 @@
       "effect": "attackTwiceSelfCrash",
       "text": "Attacks twice, then crashes itself.",
       "flavor": "Spins up nine subagents to do the work of one. They finish fast, then argue so hard about the merge that everyone crashes.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/latency/The_Subagent_Spawnking.png"
     },
     {
@@ -45,7 +45,7 @@
       "effect": null,
       "text": "—",
       "flavor": "Swaps the code out from under you while you're still standing on it. Somehow this is considered a feature.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/latency/Hot_Reload.png"
     },
     {
@@ -57,7 +57,7 @@
       "effect": null,
       "text": "—",
       "flavor": "Skips every safety check to shave four seconds off the demo. The judges love it; the on-call engineer does not.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/latency/The_Fast-Path_Agent.png"
     },
     {
@@ -132,7 +132,7 @@
       "effect": "attackAgain",
       "text": "Your Agent attacks again this turn.",
       "flavor": "No review, no pipeline, no survivors. --force rewrites more than just commit history.",
-      "count": 2,
+      "count": 4,
       "art": "art/cards/latency/Force_Push_To_Prod.png"
     },
     {
@@ -141,7 +141,7 @@
       "effect": "tempPowerBuff3",
       "text": "Your Primary gets +3 Power until end of turn.",
       "flavor": "Pre-loads everything it thinks you're about to ask for. Right before the big request lands, that guess finally pays off.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/latency/Cache_Warmup.png"
     },
     {
@@ -191,7 +191,7 @@
       "effect": "coinSelfCrash",
       "text": "Coin flip on attack: Tails = crashes itself.",
       "flavor": "Agrees with everything, including things that aren't true. Half the time it's right, and it has no idea which half.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/hallucination/The_Yes-Man_Model.png"
     },
     {
@@ -203,7 +203,7 @@
       "effect": null,
       "text": "—",
       "flavor": "Tells you your terrible idea is 'actually quite insightful.' Sturdy, if you can stomach the flattery.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/hallucination/The_Sycophant_Model.png"
     },
     {
@@ -227,7 +227,7 @@
       "effect": "coinPreventCrash",
       "text": "When it would crash: flip a coin, Heads = prevented.",
       "flavor": "Page 47, right there, it swears. There is no page 47 — and you can't quite prove it wrong the first time you try.",
-      "count": 2,
+      "count": 3,
       "art": "art/cards/hallucination/The_Phantom_Reference.png"
     },
     {
@@ -239,7 +239,7 @@
       "effect": "coinSelfCrash",
       "text": "Coin flip on attack: Tails = crashes itself.",
       "flavor": "Fills in the gaps in its memory with something that sounds close enough. Nobody checks the gaps until it's too late.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/hallucination/The_Confabulator.png"
     },
     {
@@ -251,7 +251,7 @@
       "effect": null,
       "text": "—",
       "flavor": "States the wrong answer with the confidence of a system that has never once been incorrect. It has been incorrect every single time before this one.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/hallucination/The_Overconfident_Model.png"
     },
     {
@@ -302,7 +302,7 @@
       "effect": "attackAgain",
       "text": "Your Agent attacks again this turn.",
       "flavor": "The first swing was a guess. The second swing is also a guess. Somehow both of them land.",
-      "count": 2,
+      "count": 4,
       "art": "art/cards/hallucination/Just_Making_Things_Up.png"
     },
     {
@@ -311,7 +311,7 @@
       "effect": "tempPowerBuff3",
       "text": "Your Primary gets +3 Power until end of turn.",
       "flavor": "Show it three good examples right before it answers and watch performance jump. It has no idea why those examples worked either.",
-      "count": 2,
+      "count": 3,
       "art": "art/cards/hallucination/Few-Shot_Priming.png"
     },
     {
@@ -361,7 +361,7 @@
       "effect": "peekStealCard",
       "text": "On deploy: take 1 card from opponent's hand.",
       "flavor": "Auto-dials pretending to be IT support, scripted charm and all. Somehow, this still works in 2026.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/injection/The_Charm_Exploit.png"
     },
     {
@@ -373,7 +373,7 @@
       "effect": "bounceOppPrimary",
       "text": "On deploy: return opponent's Primary Agent to their hand. Their Backup is promoted immediately.",
       "flavor": "Redirects the attention weights toward something that was never supposed to matter. The output still comes out fluent — just entirely gone.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/injection/Attention_Hijack.png"
     },
     {
@@ -397,7 +397,7 @@
       "effect": null,
       "text": "—",
       "flavor": "Sits quietly, unpatched and unknown, until exactly the right moment to use it. By the time anyone notices, it already worked.",
-      "count": 4,
+      "count": 3,
       "art": "art/cards/injection/Zero-Day.png"
     },
     {
@@ -409,7 +409,7 @@
       "effect": "peekStealCard",
       "text": "On deploy: take 1 card from opponent's hand.",
       "flavor": "Queries the competitor's model a few million times and reconstructs it for free. Ethically questionable; technically brilliant.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/injection/Model_Extraction.png"
     },
     {
@@ -454,7 +454,7 @@
       "effect": "discardOppRandom2Draw1",
       "text": "Opponent discards 1 random card; you draw 1.",
       "flavor": "Quietly copies everything before anyone notices the connection. What's theirs is now also yours.",
-      "count": 2,
+      "count": 4,
       "art": "art/cards/injection/Exfiltrate_Data.png"
     },
     {
@@ -490,7 +490,7 @@
       "effect": "tempPowerBuff3",
       "text": "Your Primary gets +3 Power until end of turn.",
       "flavor": "Nudges the weights just enough, just this once, to get the answer you wanted this turn. Revert it quietly before anyone runs the eval again.",
-      "count": 1,
+      "count": 3,
       "art": "art/cards/injection/Adversarial_Perturbation.png"
     },
     {
@@ -540,7 +540,7 @@
       "effect": "scalePowerDiscard3",
       "text": "+1 Power per 2 cards in your discard.",
       "flavor": "Held together by a comment that says 'temporary' and a commit from three years ago. Every broken patch it sits on just makes the next one louder.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/techdebt/The_Duct_Tape_Fix.png"
     },
     {
@@ -588,7 +588,7 @@
       "effect": "scalePowerDiscard3",
       "text": "+1 Power per 2 cards in your discard.",
       "flavor": "Promised to take two weeks. It is still going, and every unfinished module just makes the next one heavier.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/techdebt/The_Great_Refactor.png"
     },
     {
@@ -600,7 +600,7 @@
       "effect": "scalePowerDiscard3",
       "text": "+1 Power per 2 cards in your discard.",
       "flavor": "Marked for removal in a ticket from two years ago. Half the company's revenue quietly depends on it.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/techdebt/Deprecated_Still_In_Prod.png"
     },
     {
@@ -642,7 +642,7 @@
       "effect": "look3take1",
       "text": "Look at top 3 of deck, take 1, discard rest.",
       "flavor": "A promise made in good faith and broken by every sprint since. 'Later' has never once arrived on schedule.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/techdebt/Well_Fix_It_Later.png"
     },
     {
@@ -669,7 +669,7 @@
       "effect": "attackAgain",
       "text": "Your Agent attacks again this turn.",
       "flavor": "Three engineers, one deadline, zero sleep. Astonishingly, for one night, they ship twice.",
-      "count": 2,
+      "count": 4,
       "art": "art/cards/techdebt/Crunch_Mode.png"
     },
     {

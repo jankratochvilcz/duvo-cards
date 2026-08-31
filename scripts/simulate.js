@@ -298,7 +298,7 @@ class Game {
 
   playPatch(ownerKey, uid) {
     const st = this.state.players[ownerKey];
-    if (st.patchesRemaining <= 0) return false;
+    if (st.patchesRemaining <= 0 || st.attackedThisTurn) return false;
     const idx = st.hand.findIndex(c => c.uid === uid);
     if (idx < 0) return false;
     const card = st.hand[idx];
@@ -553,6 +553,7 @@ class Game {
 
   performAttack(activeKey) {
     const st = this.state.players[activeKey];
+    st.patchesRemaining = 0;
     if (st.skipAttackThisTurn) return;
     const attackerRef = st.primary;
     if (attackerRef && attackerRef.deployedTurn === st.turnsTaken && attackerRef.effect !== "noSummoningSickness") return;
@@ -581,7 +582,7 @@ class Game {
     if (st.skipNextDeploy) { st.deploysRemaining = 0; st.skipNextDeploy = false; }
     else st.deploysRemaining = 1;
     if (st.skipNextPatch) { st.patchesRemaining = 0; st.skipNextPatch = false; }
-    else st.patchesRemaining = 1;
+    else st.patchesRemaining = 2;
     if (st.skipNextAttack) { st.skipAttackThisTurn = true; st.skipNextAttack = false; }
     else st.skipAttackThisTurn = false;
     st.deploysThisTurn = 0;
@@ -880,19 +881,18 @@ class Game {
       this.deployCard(key, opts[0].uid);
     }
 
-    // Remaining overclocks: play the best one if it's actually good.
-    if (st.patchesRemaining > 0 && !this.state.gameOver) {
+    // Remaining overclocks: dump setup before the attack (up to 2 per turn).
+    while (st.patchesRemaining > 0 && !this.state.gameOver) {
       const opts = st.hand.filter(c => c.type === "patch");
-      if (opts.length) {
-        opts.sort((a, b) => this.patchScore(key, b) - this.patchScore(key, a));
-        if (this.patchScore(key, opts[0]) >= 3) this.playPatch(key, opts[0].uid);
-        // extraDeploy may have opened another deploy
-        while (st.deploysRemaining > 0 && !this.state.gameOver) {
-          const dOpts = st.hand.filter(c => c.type === "process" && this.canDeploy(key, c));
-          if (!dOpts.length) break;
-          dOpts.sort((a, b) => this.deployScore(key, b) - this.deployScore(key, a));
-          this.deployCard(key, dOpts[0].uid);
-        }
+      if (!opts.length) break;
+      opts.sort((a, b) => this.patchScore(key, b) - this.patchScore(key, a));
+      if (this.patchScore(key, opts[0]) < 3) break;
+      this.playPatch(key, opts[0].uid);
+      while (st.deploysRemaining > 0 && !this.state.gameOver) {
+        const dOpts = st.hand.filter(c => c.type === "process" && this.canDeploy(key, c));
+        if (!dOpts.length) break;
+        dOpts.sort((a, b) => this.deployScore(key, b) - this.deployScore(key, a));
+        this.deployCard(key, dOpts[0].uid);
       }
     }
 
