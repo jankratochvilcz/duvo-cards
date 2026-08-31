@@ -45,6 +45,7 @@ def art_path_for(deck_key: str, name: str) -> str:
 
 
 def assign_and_validate(data: dict) -> list[str]:
+	errors: list[str] = []
 	if (ROOT / "CARDS.md").is_file():
 		errors.append("CARDS.md must not exist; the only card catalog is data/cards.json")
 	for deck_key in DECK_ORDER:
