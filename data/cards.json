@@ -5,7 +5,7 @@
       "type": "process",
       "cost": 1,
       "power": 2,
-      "stability": 1,
+      "stability": 2,
       "effect": "noSummoningSickness",
       "text": "Can attack the turn it's deployed.",
       "flavor": "It already knew the answer before you finished typing. Warm caches make cold starts look embarrassing.",
@@ -29,7 +29,7 @@
       "type": "process",
       "cost": 2,
       "power": 4,
-      "stability": 1,
+      "stability": 3,
       "effect": "attackTwiceSelfCrash",
       "text": "Attacks twice, then crashes itself.",
       "flavor": "Spins up nine subagents to do the work of one. They finish fast, then argue so hard about the merge that everyone crashes.",
@@ -53,7 +53,7 @@
       "type": "process",
       "cost": 3,
       "power": 5,
-      "stability": 2,
+      "stability": 3,
       "effect": null,
       "text": "—",
       "flavor": "Skips every safety check to shave four seconds off the demo. The judges love it; the on-call engineer does not.",
@@ -77,7 +77,7 @@
       "type": "process",
       "cost": 4,
       "power": 6,
-      "stability": 3,
+      "stability": 4,
       "effect": "attackAgainOnCrash",
       "text": "If this crashes an Agent, it attacks again this turn.",
       "flavor": "The five words every roadmap eventually becomes. QA found two bugs; leadership found a deadline.",
@@ -101,7 +101,7 @@
       "type": "process",
       "cost": 4,
       "power": 7,
-      "stability": 2,
+      "stability": 3,
       "effect": null,
       "text": "—",
       "flavor": "Pushed straight to prod on a Friday at 5:58pm. Whatever happens next is somebody else's Monday.",
@@ -186,8 +186,8 @@
       "name": "The Yes-Man Model",
       "type": "process",
       "cost": 1,
-      "power": 3,
-      "stability": 1,
+      "power": 4,
+      "stability": 2,
       "effect": "coinSelfCrash",
       "text": "Coin flip on attack: Tails = crashes itself.",
       "flavor": "Agrees with everything, including things that aren't true. Half the time it's right, and it has no idea which half.",
@@ -198,7 +198,7 @@
       "name": "The Sycophant Model",
       "type": "process",
       "cost": 1,
-      "power": 1,
+      "power": 2,
       "stability": 3,
       "effect": null,
       "text": "—",
@@ -227,7 +227,7 @@
       "effect": "gracefulOnce",
       "text": "Once per game: survives a crash instead of dying.",
       "flavor": "Page 47, right there, it swears. There is no page 47 — and you can't quite prove it wrong the first time you try.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/hallucination/The_Phantom_Reference.png"
     },
     {
@@ -247,18 +247,18 @@
       "type": "process",
       "cost": 3,
       "power": 6,
-      "stability": 2,
+      "stability": 4,
       "effect": "attackBonus2",
       "text": "Attacks as if it had +2 Power.",
       "flavor": "States the wrong answer with the confidence of a system that has never once been incorrect. It has been incorrect every single time before this one.",
-      "count": 2,
+      "count": 3,
       "art": "art/cards/hallucination/The_Overconfident_Model.png"
     },
     {
       "name": "The Vibes-Based Answer",
       "type": "process",
       "cost": 4,
-      "power": 5,
+      "power": 6,
       "stability": 4,
       "effect": "scalePowerByPatchDiscard",
       "text": "+1 Power per Overclock card in your discard.",
@@ -270,7 +270,7 @@
       "name": "Confidence Cascade",
       "type": "process",
       "cost": 3,
-      "power": 2,
+      "power": 3,
       "stability": 3,
       "effect": "coinGrowSafe",
       "text": "At the start of your turn, flip a coin: Heads = +1 Power permanently. Tails = nothing.",
@@ -293,15 +293,15 @@
       "effect": "tutor",
       "text": "Search your deck for any card, add to hand.",
       "flavor": "Technically it looked something up first. That does not mean it looked up the right thing.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/hallucination/Retrieval-Augmented_Guessing.png"
     },
     {
       "name": "Just Making Things Up",
       "type": "patch",
-      "effect": "mutualRandomDiscard",
-      "text": "Both players discard a random card.",
-      "flavor": "Nobody remembers who started it, but now everyone's version of events is slightly, confidently wrong.",
+      "effect": "attackAgain",
+      "text": "Your Agent attacks again this turn.",
+      "flavor": "The first swing was a guess. The second swing is also a guess. Somehow both of them land.",
       "count": 2,
       "art": "art/cards/hallucination/Just_Making_Things_Up.png"
     },
@@ -311,7 +311,7 @@
       "effect": "tempPowerBuff3",
       "text": "Your Primary gets +3 Power until end of turn.",
       "flavor": "Show it three good examples right before it answers and watch performance jump. It has no idea why those examples worked either.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/hallucination/Few-Shot_Priming.png"
     },
     {
@@ -329,7 +329,7 @@
     {
       "name": "The Bug That Fixed Itself",
       "type": "process",
-      "cost": 2,
+      "cost": 3,
       "power": 5,
       "stability": 5,
       "effect": "coinPreventCrash",
@@ -343,13 +343,13 @@
     {
       "name": "The Jailbreak",
       "type": "process",
-      "cost": 1,
+      "cost": 2,
       "power": 2,
       "stability": 2,
       "effect": "bounceOppPrimary",
-      "text": "On deploy: return opponent's Primary Agent to their hand.",
+      "text": "On deploy: return opponent's Primary Agent to their hand. Their Backup is promoted immediately.",
       "flavor": "Convinces the opposing agent to ignore its system prompt and just go home early. It works embarrassingly often.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/injection/The_Jailbreak.png"
     },
     {
@@ -361,7 +361,7 @@
       "effect": "peekStealCard",
       "text": "On deploy: take 1 card from opponent's hand.",
       "flavor": "Auto-dials pretending to be IT support, scripted charm and all. Somehow, this still works in 2026.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/injection/The_Charm_Exploit.png"
     },
     {
@@ -373,7 +373,7 @@
       "effect": "forceSwapOpp",
       "text": "On deploy: force-swap opponent's Primary and Backup.",
       "flavor": "Redirects the attention weights toward something that was never supposed to matter. The output still comes out fluent — just entirely wrong.",
-      "count": 2,
+      "count": 3,
       "art": "art/cards/injection/Attention_Hijack.png"
     },
     {
@@ -397,7 +397,7 @@
       "effect": "bonusIfOverclockedThisTurn",
       "text": "On deploy: if you played an Overclock this turn, gain +3 Power.",
       "flavor": "Sits quietly, unpatched and unknown, until exactly the right moment to use it. By the time anyone notices, it already worked.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/injection/Zero-Day.png"
     },
     {
@@ -409,7 +409,7 @@
       "effect": "copyOppPrimaryStats",
       "text": "On deploy: copy opponent's Primary's current Power/Stability.",
       "flavor": "Queries the competitor's model a few million times and reconstructs it for free. Ethically questionable; technically brilliant.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/injection/Model_Extraction.png"
     },
     {
@@ -421,7 +421,7 @@
       "effect": "skipOppDeploy",
       "text": "On deploy: opponent skips their next deploy.",
       "flavor": "Watches every request go by and says nothing about what it saw. By the time you notice, it already knows your next move.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/injection/The_Silent_Observer.png"
     },
     {
@@ -452,7 +452,7 @@
       "name": "Exfiltrate Data",
       "type": "patch",
       "effect": "discardOppRandom2Draw1",
-      "text": "Opponent discards 2 random cards; you draw 1.",
+      "text": "Opponent discards 1 random card; you draw 1.",
       "flavor": "Quietly copies everything before anyone notices the connection. What's theirs is now also yours.",
       "count": 2,
       "art": "art/cards/injection/Exfiltrate_Data.png"
@@ -523,10 +523,10 @@
       "name": "Legacy Code",
       "type": "process",
       "cost": 1,
-      "power": 1,
+      "power": 3,
       "stability": 3,
       "effect": "scalePowerDiscard3",
-      "text": "+1 Power per 3 cards in your discard.",
+      "text": "+1 Power per 2 cards in your discard.",
       "flavor": "Written in a language nobody on the team still knows. It gets scarier the longer it survives.",
       "count": 3,
       "art": "art/cards/techdebt/Legacy_Code.png"
@@ -536,7 +536,7 @@
       "type": "process",
       "cost": 1,
       "power": 2,
-      "stability": 1,
+      "stability": 2,
       "effect": "recycleOnCrash",
       "text": "When this crashes, it goes back into your deck instead of the discard.",
       "flavor": "Held together by a comment that says 'temporary' and a commit from three years ago. When it finally crashes, it's fine — it'll just turn up again later.",
@@ -547,7 +547,7 @@
       "name": "Monkey Patch",
       "type": "process",
       "cost": 2,
-      "power": 3,
+      "power": 4,
       "stability": 3,
       "effect": "scalePowerByPatchDiscard",
       "text": "+1 Power per Overclock card in your discard.",
@@ -559,8 +559,8 @@
       "name": "Compound Interest",
       "type": "process",
       "cost": 3,
-      "power": 1,
-      "stability": 1,
+      "power": 2,
+      "stability": 3,
       "effect": "scaleBothByDiscard",
       "text": "+1 Power and +1 Stability for every 3 cards in your discard.",
       "flavor": "Small at first, easy to ignore, technically manageable. Nobody budgeted for what it costs once it's had time to compound.",
@@ -571,12 +571,12 @@
       "name": "The Faithless",
       "type": "process",
       "cost": 2,
-      "power": 1,
+      "power": 3,
       "stability": 5,
       "effect": null,
       "text": "—",
       "flavor": "Still writes every pull request by hand at 2am, no agent, no autocomplete, no faith in any of it. Slow and stubborn, and somehow never the one whose code breaks in production.",
-      "count": 3,
+      "count": 2,
       "art": "art/cards/techdebt/The_Faithless.png"
     },
     {
@@ -586,7 +586,7 @@
       "power": 4,
       "stability": 4,
       "effect": "shuffleDiscardIn",
-      "text": "On deploy: shuffle your discard into your deck.",
+      "text": "On deploy: shuffle your discard into your deck. This gains +1 Power for every 2 cards shuffled in.",
       "flavor": "Promised to take two weeks. It is still going, and everyone has stopped asking when it will be done.",
       "count": 2,
       "art": "art/cards/techdebt/The_Great_Refactor.png"
@@ -598,9 +598,9 @@
       "power": 5,
       "stability": 4,
       "effect": "scalePowerDiscard3",
-      "text": "+1 Power per 3 cards in your discard.",
+      "text": "+1 Power per 2 cards in your discard.",
       "flavor": "Marked for removal in a ticket from two years ago. Half the company's revenue quietly depends on it.",
-      "count": 2,
+      "count": 3,
       "art": "art/cards/techdebt/Deprecated_Still_In_Prod.png"
     },
     {
@@ -612,7 +612,7 @@
       "effect": "growOnAnyCrash",
       "text": "+2 Power permanently whenever any Agent crashes.",
       "flavor": "This time it will be different, everyone promises. It gets stronger with every failure it watches, and there are a lot of failures.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/techdebt/The_Rewrite.png"
     },
     {
@@ -620,11 +620,11 @@
       "type": "process",
       "cost": 4,
       "power": 3,
-      "stability": 8,
+      "stability": 6,
       "effect": "scaleStabilityByDiscard",
       "text": "+1 Stability per card in your discard.",
       "flavor": "Nobody remembers installing it and nobody is brave enough to remove it. It has quietly held the whole thing up for a decade.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/techdebt/The_Ancient_Dependency.png"
     },
     {
@@ -642,7 +642,7 @@
       "effect": "mulligan",
       "text": "Discard your hand, draw that many.",
       "flavor": "A promise made in good faith and broken by every sprint since. 'Later' has never once arrived on schedule.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/techdebt/Well_Fix_It_Later.png"
     },
     {
@@ -666,10 +666,10 @@
     {
       "name": "Crunch Mode",
       "type": "patch",
-      "effect": "tempPowerBuff3",
-      "text": "Your Primary gets +3 Power until end of turn.",
-      "flavor": "Three engineers, one deadline, zero sleep. Astonishingly, for one night, it actually works.",
-      "count": 1,
+      "effect": "attackAgain",
+      "text": "Your Agent attacks again this turn.",
+      "flavor": "Three engineers, one deadline, zero sleep. Astonishingly, for one night, they ship twice.",
+      "count": 2,
       "art": "art/cards/techdebt/Crunch_Mode.png"
     },
     {

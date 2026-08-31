@@ -15,7 +15,8 @@ treat this as ground truth for *current* behavior — and update it in the same 
 - Each player picks one of the four decks (see `CARDS.md` / `data/cards.json`).
 - Each player has two **Agent slots**: **Primary** and **Backup**.
 - Each player starts at **0 Ship Points**. First to **5** wins.
-- Starting hand: 5 cards, drawn from the top of a shuffled 30-card deck.
+- Starting hand: 5 cards, drawn from the top of a shuffled 30-card deck. The second player
+  draws 1 extra card before the match begins (6-card opening hand) to offset first-turn haste.
 - If a player cannot draw a card on their own turn (deck-out), they lose immediately.
 
 ## Turn structure
@@ -61,8 +62,7 @@ puts your own Agent at risk regardless of whether your attack lands.
 
 1. Your Primary attacks the opponent's Primary.
 2. **If the opponent has no Primary**, this is an **unblocked hit**: you score **1 Ship Point**
-   immediately and nothing else happens. This is the *only* way to score — crashing an opposing
-   Agent through combat never grants a Ship Point by itself.
+   immediately and nothing else happens.
 3. **If the opponent has a Primary**, resolve in this order:
    - Compute your attacker's effective Power (base + all active modifiers, see
      [Stats](#effective-stats-power--stability) below).
@@ -77,7 +77,15 @@ puts your own Agent at risk regardless of whether your attack lands.
    - Both crash checks are independent — a mutual trade (both Agents crash) is possible and common.
 4. A crashed Agent goes to its owner's discard pile, **unless** it has `recycleOnCrash` (goes back
    into the deck instead) — see **The Duct Tape Fix**.
-5. Crashing (yours or theirs) never scores a Ship Point. Only step 2 (unblocked hit) scores.
+5. **Breakthrough:** if that combat crash left the opponent with *no Backup* (their last Agent
+   just went down), you score **1 Ship Point**. Crashing a Primary while they still have a Backup
+   sitting in the other slot does *not* score — that's what extra-attack chaining is for.
+6. Unblocked hits (step 2) and breakthroughs (step 5) are the only ways to score. Hard-removal
+   Overclocks (`crashOppPrimary`, `mutualCrashPrimaries`) still never score.
+
+### Extra-attack chaining
+
+`extraAttack` is a charge counter, not a boolean. Playing two extra-attack effects (or combining **Force Push To Prod** / **Just Making Things Up** / **Crunch Mode** with **Ship It**'s on-crash extra swing) stacks. After each swing, if your Primary is empty and you have a Backup, the Backup promotes immediately so the next swing can happen. The opponent's Backup still only auto-promotes at end of turn — that window is how aggro actually scores.
 
 ### Removal that skips combat entirely
 
@@ -111,7 +119,7 @@ recomputed on the fly from these layers, all of which stack:
   (`tempPowerBuff3`: **Cache Warmup**, **Few-Shot Priming**, **Adversarial Perturbation**,
   **Crunch Mode**).
 - Discard-pile scalers, recomputed live from the current discard pile size — not snapshotted:
-  - `scalePowerDiscard3`: +1 Power per 3 cards in your discard (**Legacy Code**, **Deprecated,
+  - `scalePowerDiscard3`: +1 Power per 2 cards in your discard (**Legacy Code**, **Deprecated,
     Still In Prod**).
   - `scalePowerByPatchDiscard`: +1 Power per Overclock card specifically in your discard
     (**Monkey Patch**, **The Vibes-Based Answer**).
@@ -143,13 +151,13 @@ slot they land in):
 
 | Effect | Card(s) | What happens |
 |---|---|---|
-| `bounceOppPrimary` | The Jailbreak | Opponent's Primary returns to their hand (blocked by immunity) |
+| `bounceOppPrimary` | The Jailbreak | Opponent's Primary returns to their hand (blocked by immunity). Their Backup, if any, is promoted immediately — bounce is a reroute, not a free empty-board punch unless they had no Backup. |
 | `peekStealCard` | The Charm Exploit | You choose and take 1 card from the opponent's hand |
 | `forceSwapOpp` | Attention Hijack | Opponent's Primary and Backup are force-swapped (blocked by immunity) |
 | `copyOppPrimaryStats` | Model Extraction | This card's effective Power/Stability become a snapshot of the opponent's current Primary |
 | `skipOppDeploy` | The Silent Observer | Opponent's next deploy is blocked |
 | `deployDraw2Discard1` | The Confabulator | Draw 2, then choose 1 to discard |
-| `shuffleDiscardIn` | The Great Refactor | Your discard pile is shuffled back into your deck |
+| `shuffleDiscardIn` | The Great Refactor | Shuffle discard into deck; this Agent gains +1 Power per 2 cards shuffled in |
 | `bonusIfSecondDeploy` | Parallel Rollout | +2 Power if you already deployed another Agent this turn |
 | `bonusIfOverclockedThisTurn` | Zero-Day | +3 Power if you already played an Overclock this turn |
 
@@ -158,9 +166,9 @@ slot they land in):
 Overclocks are one-shot: play from hand, resolve immediately, go to discard. One per turn unless
 boosted by `extraDeploy`-adjacent effects. Full effect-key reference:
 
-`attackAgain`, `extraDeploy`, `draw2`, `reroll`, `tempPowerBuff3`, `crashOppPrimary`,
+`attackAgain` (charges stack — two extra-attack effects in one turn really do mean two extra swings; if your Primary crashed on an earlier swing, your Backup promotes immediately so the extra attack has a body. The opponent's Backup still waits until end of turn, so a crash-then-chain can score an unblocked hit), `extraDeploy`, `draw2`, `reroll`, `tempPowerBuff3`, `crashOppPrimary`,
 `mutualCrashPrimaries`, `mutualRandomDiscard`, `skipAttackDraw2`, `skipOppPatch`, `skipOppAttack`,
-`discardOppRandom2Draw1`, `drawThenDiscard`, `mulligan`, `look3take1`, `tutor`, `stabilityBuff2`,
+`discardOppRandom2Draw1` (one random discard, not two), `drawThenDiscard`, `mulligan`, `look3take1`, `tutor`, `stabilityBuff2`,
 `reclaimCrashed`.
 
 See `data/cards.json` for exact card-to-effect mapping and rules text per card, or `CARDS.md` for
@@ -186,11 +194,8 @@ so a palette change is a 4-line edit, not a search-and-replace across the file.
 
 ## Known open design questions (good starting points for other agents)
 
-- AI opponent (`aiTakeTurn`) always attacks if it can and never evaluates counter-damage risk
-  before doing so — it's beatable by exploiting this. Worth deciding whether that's a feature
-  (approachable AI) or something to fix.
-- Deck balance has been playtested qualitatively (bot-vs-bot stress runs check for crashes, not
-  win-rate balance) — a real win-rate analysis across all 16 deck-matchup pairs would be valuable.
+- AI opponent (`aiTakeTurn`) plays a wider set of Overclocks and will skip a swing that would only crash itself — still a heuristic, not a solver.
+- Deck balance is stress-tested with a headless heuristic sim (`scripts/simulate.js`) across all 16 matchup pairs. Re-run after card changes: `node scripts/simulate.js --games 1600 --seed 1`.
 - `hasAttacked` (for `firstAttackBonus`) and `usedGraceful` (for `gracefulOnce`) are per-card-
   instance one-time flags that never reset — confirm that's intended for cards that get bounced
   back to hand and redeployed (currently: yes, the flag persists, so a bounced Demo That Worked

@@ -226,7 +226,7 @@ function expand(list, deckKey){
 
 const DECK_TEMPLATES = {
   latency: [
-    {name:'Cache Hit', type:'process', cost:1, power:2, stability:1, effect:'noSummoningSickness',
+    {name:'Cache Hit', type:'process', cost:1, power:2, stability:2, effect:'noSummoningSickness',
       text:'Can attack the turn it\'s deployed.',
       flavor:'It already knew the answer before you finished typing. Warm caches make cold starts look embarrassing.', count:3,
       art:'art/cards/latency/Cache_Hit.png'},
@@ -234,7 +234,7 @@ const DECK_TEMPLATES = {
       text:'—',
       flavor:'Compiled at 2am by a CI runner that has never known daylight. Nobody tested it, but it shipped anyway.', count:1,
       art:'art/cards/latency/The_Nightly_Build.png'},
-    {name:'The Subagent Spawnking', type:'process', cost:2, power:4, stability:1, effect:'attackTwiceSelfCrash',
+    {name:'The Subagent Spawnking', type:'process', cost:2, power:4, stability:3, effect:'attackTwiceSelfCrash',
       text:'Attacks twice, then crashes itself.',
       flavor:'Spins up nine subagents to do the work of one. They finish fast, then argue so hard about the merge that everyone crashes.', count:3,
       art:'art/cards/latency/The_Subagent_Spawnking.png'},
@@ -242,7 +242,7 @@ const DECK_TEMPLATES = {
       text:'—',
       flavor:'Swaps the code out from under you while you\'re still standing on it. Somehow this is considered a feature.', count:2,
       art:'art/cards/latency/Hot_Reload.png'},
-    {name:'The Fast-Path Agent', type:'process', cost:3, power:5, stability:2, effect:null,
+    {name:'The Fast-Path Agent', type:'process', cost:3, power:5, stability:3, effect:null,
       text:'—',
       flavor:'Skips every safety check to shave four seconds off the demo. The judges love it; the on-call engineer does not.', count:3,
       art:'art/cards/latency/The_Fast-Path_Agent.png'},
@@ -250,7 +250,7 @@ const DECK_TEMPLATES = {
       text:'If this crashes an Agent, draw a card.',
       flavor:'It doesn\'t error, it doesn\'t warn you, it just stops. You find out three hours later.', count:2,
       art:'art/cards/latency/Silent_Timeout.png'},
-    {name:'Ship It', type:'process', cost:4, power:6, stability:3, effect:'attackAgainOnCrash',
+    {name:'Ship It', type:'process', cost:4, power:6, stability:4, effect:'attackAgainOnCrash',
       text:'If this crashes an Agent, it attacks again this turn.',
       flavor:'The five words every roadmap eventually becomes. QA found two bugs; leadership found a deadline.', count:2,
       art:'art/cards/latency/Ship_It.png'},
@@ -258,7 +258,7 @@ const DECK_TEMPLATES = {
       text:'On deploy: if you already deployed another Agent this turn, gain +2 Power.',
       flavor:'Ships to half the fleet before the last rollout has even finished. It works remarkably well, right up until the two versions meet in the middle.', count:1,
       art:'art/cards/latency/Parallel_Rollout.png'},
-    {name:'YOLO Deploy', type:'process', cost:4, power:7, stability:2, effect:null,
+    {name:'YOLO Deploy', type:'process', cost:4, power:7, stability:3, effect:null,
       text:'—',
       flavor:'Pushed straight to prod on a Friday at 5:58pm. Whatever happens next is somebody else\'s Monday.', count:1,
       art:'art/cards/latency/YOLO_Deploy.png'},
@@ -292,11 +292,11 @@ const DECK_TEMPLATES = {
       art:'art/cards/latency/Foothills_of_the_Singularity.png'},
   ],
   hallucination: [
-    {name:'The Yes-Man Model', type:'process', cost:1, power:3, stability:1, effect:'coinSelfCrash',
+    {name:'The Yes-Man Model', type:'process', cost:1, power:4, stability:2, effect:'coinSelfCrash',
       text:'Coin flip on attack: Tails = crashes itself.',
       flavor:'Agrees with everything, including things that aren\'t true. Half the time it\'s right, and it has no idea which half.', count:3,
       art:'art/cards/hallucination/The_Yes-Man_Model.png'},
-    {name:'The Sycophant Model', type:'process', cost:1, power:1, stability:3, effect:null,
+    {name:'The Sycophant Model', type:'process', cost:1, power:2, stability:3, effect:null,
       text:'—',
       flavor:'Tells you your terrible idea is \'actually quite insightful.\' Sturdy, if you can stomach the flattery.', count:3,
       art:'art/cards/hallucination/The_Sycophant_Model.png'},
@@ -306,21 +306,21 @@ const DECK_TEMPLATES = {
       art:'art/cards/hallucination/Footnote_Fabricator.png'},
     {name:'The Phantom Reference', type:'process', cost:2, power:3, stability:3, effect:'gracefulOnce',
       text:'Once per game: survives a crash instead of dying.',
-      flavor:'Page 47, right there, it swears. There is no page 47 — and you can\'t quite prove it wrong the first time you try.', count:3,
+      flavor:'Page 47, right there, it swears. There is no page 47 — and you can\'t quite prove it wrong the first time you try.', count:2,
       art:'art/cards/hallucination/The_Phantom_Reference.png'},
     {name:'The Confabulator', type:'process', cost:3, power:5, stability:3, effect:'deployDraw2Discard1',
       text:'On deploy: draw 2, discard 1.',
       flavor:'Fills in the gaps in its memory with something that sounds close enough. Nobody checks the gaps until it\'s too late.', count:3,
       art:'art/cards/hallucination/The_Confabulator.png'},
-    {name:'The Overconfident Model', type:'process', cost:3, power:6, stability:2, effect:'attackBonus2',
+    {name:'The Overconfident Model', type:'process', cost:3, power:6, stability:4, effect:'attackBonus2',
       text:'Attacks as if it had +2 Power.',
-      flavor:'States the wrong answer with the confidence of a system that has never once been incorrect. It has been incorrect every single time before this one.', count:2,
+      flavor:'States the wrong answer with the confidence of a system that has never once been incorrect. It has been incorrect every single time before this one.', count:3,
       art:'art/cards/hallucination/The_Overconfident_Model.png'},
-    {name:'The Vibes-Based Answer', type:'process', cost:4, power:5, stability:4, effect:'scalePowerByPatchDiscard',
+    {name:'The Vibes-Based Answer', type:'process', cost:4, power:6, stability:4, effect:'scalePowerByPatchDiscard',
       text:'+1 Power per Overclock card in your discard.',
       flavor:'Feels right, reads well, and has never once been fact-checked by anyone. The more shortcuts you\'ve already taken to get here, the more right it feels.', count:2,
       art:'art/cards/hallucination/The_Vibes-Based_Answer.png'},
-    {name:'Confidence Cascade', type:'process', cost:3, power:2, stability:3, effect:'coinGrowSafe',
+    {name:'Confidence Cascade', type:'process', cost:3, power:3, stability:3, effect:'coinGrowSafe',
       text:'At the start of your turn, flip a coin: Heads = +1 Power permanently. Tails = nothing.',
       flavor:'Each time it\'s right, it gets a little louder. It never actually gets quieter when it\'s wrong.', count:1,
       art:'art/cards/hallucination/Confidence_Cascade.png'},
@@ -330,37 +330,37 @@ const DECK_TEMPLATES = {
       art:'art/cards/hallucination/Turn_Up_The_Temperature.png'},
     {name:'Retrieval-Augmented Guessing', type:'patch', effect:'tutor',
       text:'Search your deck for any card, add to hand.',
-      flavor:'Technically it looked something up first. That does not mean it looked up the right thing.', count:3,
+      flavor:'Technically it looked something up first. That does not mean it looked up the right thing.', count:2,
       art:'art/cards/hallucination/Retrieval-Augmented_Guessing.png'},
-    {name:'Just Making Things Up', type:'patch', effect:'mutualRandomDiscard',
-      text:'Both players discard a random card.',
-      flavor:'Nobody remembers who started it, but now everyone\'s version of events is slightly, confidently wrong.', count:2,
+    {name:'Just Making Things Up', type:'patch', effect:'attackAgain',
+      text:'Your Agent attacks again this turn.',
+      flavor:'The first swing was a guess. The second swing is also a guess. Somehow both of them land.', count:2,
       art:'art/cards/hallucination/Just_Making_Things_Up.png'},
     {name:'Few-Shot Priming', type:'patch', effect:'tempPowerBuff3',
       text:'Your Primary gets +3 Power until end of turn.',
-      flavor:'Show it three good examples right before it answers and watch performance jump. It has no idea why those examples worked either.', count:1,
+      flavor:'Show it three good examples right before it answers and watch performance jump. It has no idea why those examples worked either.', count:2,
       art:'art/cards/hallucination/Few-Shot_Priming.png'},
     {name:'AGI', type:'process', cost:4, power:8, stability:6, effect:'coinDoubleOrNothing',
       text:'Flip a coin: Heads = double Power. Tails = does nothing.',
       flavor:'Ask ten researchers when it arrives and get eleven different answers. When it finally shows up, it is either everything or absolutely nothing.', count:1,
       art:'art/cards/hallucination/AGI.png'},
-    {name:'The Bug That Fixed Itself', type:'process', cost:2, power:5, stability:5, effect:'coinPreventCrash',
+    {name:'The Bug That Fixed Itself', type:'process', cost:3, power:5, stability:5, effect:'coinPreventCrash',
       text:'When it would crash: flip a coin, Heads = prevented.',
       flavor:'Nobody changed anything. It just stopped happening one Tuesday, and everyone agreed never to ask why.', count:1,
       art:'art/cards/hallucination/The_Bug_That_Fixed_Itself.png'},
   ],
   injection: [
-    {name:'The Jailbreak', type:'process', cost:1, power:2, stability:2, effect:'bounceOppPrimary',
-      text:'On deploy: return opponent\'s Primary Agent to their hand.',
-      flavor:'Convinces the opposing agent to ignore its system prompt and just go home early. It works embarrassingly often.', count:3,
+    {name:'The Jailbreak', type:'process', cost:2, power:2, stability:2, effect:'bounceOppPrimary',
+      text:'On deploy: return opponent\'s Primary Agent to their hand. Their Backup is promoted immediately.',
+      flavor:'Convinces the opposing agent to ignore its system prompt and just go home early. It works embarrassingly often.', count:2,
       art:'art/cards/injection/The_Jailbreak.png'},
     {name:'The Charm Exploit', type:'process', cost:1, power:1, stability:3, effect:'peekStealCard',
       text:'On deploy: take 1 card from opponent\'s hand.',
-      flavor:'Auto-dials pretending to be IT support, scripted charm and all. Somehow, this still works in 2026.', count:3,
+      flavor:'Auto-dials pretending to be IT support, scripted charm and all. Somehow, this still works in 2026.', count:2,
       art:'art/cards/injection/The_Charm_Exploit.png'},
     {name:'Attention Hijack', type:'process', cost:2, power:3, stability:3, effect:'forceSwapOpp',
       text:'On deploy: force-swap opponent\'s Primary and Backup.',
-      flavor:'Redirects the attention weights toward something that was never supposed to matter. The output still comes out fluent — just entirely wrong.', count:2,
+      flavor:'Redirects the attention weights toward something that was never supposed to matter. The output still comes out fluent — just entirely wrong.', count:3,
       art:'art/cards/injection/Attention_Hijack.png'},
     {name:'The Sandbox Escape', type:'process', cost:2, power:4, stability:2, effect:'sandboxImmune',
       text:'Can\'t be targeted by opponent\'s bounce, swap, or removal effects.',
@@ -368,15 +368,15 @@ const DECK_TEMPLATES = {
       art:'art/cards/injection/The_Sandbox_Escape.png'},
     {name:'Zero-Day', type:'process', cost:2, power:2, stability:3, effect:'bonusIfOverclockedThisTurn',
       text:'On deploy: if you played an Overclock this turn, gain +3 Power.',
-      flavor:'Sits quietly, unpatched and unknown, until exactly the right moment to use it. By the time anyone notices, it already worked.', count:1,
+      flavor:'Sits quietly, unpatched and unknown, until exactly the right moment to use it. By the time anyone notices, it already worked.', count:2,
       art:'art/cards/injection/Zero-Day.png'},
     {name:'Model Extraction', type:'process', cost:3, power:1, stability:3, effect:'copyOppPrimaryStats',
       text:'On deploy: copy opponent\'s Primary\'s current Power/Stability.',
-      flavor:'Queries the competitor\'s model a few million times and reconstructs it for free. Ethically questionable; technically brilliant.', count:1,
+      flavor:'Queries the competitor\'s model a few million times and reconstructs it for free. Ethically questionable; technically brilliant.', count:2,
       art:'art/cards/injection/Model_Extraction.png'},
     {name:'The Silent Observer', type:'process', cost:3, power:4, stability:4, effect:'skipOppDeploy',
       text:'On deploy: opponent skips their next deploy.',
-      flavor:'Watches every request go by and says nothing about what it saw. By the time you notice, it already knows your next move.', count:2,
+      flavor:'Watches every request go by and says nothing about what it saw. By the time you notice, it already knows your next move.', count:1,
       art:'art/cards/injection/The_Silent_Observer.png'},
     {name:'The Adversarial Example', type:'process', cost:4, power:5, stability:3, effect:'raiseOppCost',
       text:'While in play, opponent\'s deploy cost is +1.',
@@ -387,7 +387,7 @@ const DECK_TEMPLATES = {
       flavor:'Spun up to break things before the real attackers do. Every crash it finds teaches it something new to try next.', count:2,
       art:'art/cards/injection/The_Fuzzer.png'},
     {name:'Exfiltrate Data', type:'patch', effect:'discardOppRandom2Draw1',
-      text:'Opponent discards 2 random cards; you draw 1.',
+      text:'Opponent discards 1 random card; you draw 1.',
       flavor:'Quietly copies everything before anyone notices the connection. What\'s theirs is now also yours.', count:2,
       art:'art/cards/injection/Exfiltrate_Data.png'},
     {name:'Inject Instruction', type:'patch', effect:'skipOppPatch',
@@ -416,41 +416,41 @@ const DECK_TEMPLATES = {
       art:'art/cards/injection/The_Leaked_Checkpoint.png'},
   ],
   techdebt: [
-    {name:'Legacy Code', type:'process', cost:1, power:1, stability:3, effect:'scalePowerDiscard3',
-      text:'+1 Power per 3 cards in your discard.',
+    {name:'Legacy Code', type:'process', cost:1, power:3, stability:3, effect:'scalePowerDiscard3',
+      text:'+1 Power per 2 cards in your discard.',
       flavor:'Written in a language nobody on the team still knows. It gets scarier the longer it survives.', count:3,
       art:'art/cards/techdebt/Legacy_Code.png'},
-    {name:'The Duct Tape Fix', type:'process', cost:1, power:2, stability:1, effect:'recycleOnCrash',
+    {name:'The Duct Tape Fix', type:'process', cost:1, power:2, stability:2, effect:'recycleOnCrash',
       text:'When this crashes, it goes back into your deck instead of the discard.',
       flavor:'Held together by a comment that says \'temporary\' and a commit from three years ago. When it finally crashes, it\'s fine — it\'ll just turn up again later.', count:3,
       art:'art/cards/techdebt/The_Duct_Tape_Fix.png'},
-    {name:'Monkey Patch', type:'process', cost:2, power:3, stability:3, effect:'scalePowerByPatchDiscard',
+    {name:'Monkey Patch', type:'process', cost:2, power:4, stability:3, effect:'scalePowerByPatchDiscard',
       text:'+1 Power per Overclock card in your discard.',
       flavor:'Overwrites the behavior of something it does not own and never asked permission for. Works great, until the day it does not.', count:2,
       art:'art/cards/techdebt/Monkey_Patch.png'},
-    {name:'Compound Interest', type:'process', cost:3, power:1, stability:1, effect:'scaleBothByDiscard',
+    {name:'Compound Interest', type:'process', cost:3, power:2, stability:3, effect:'scaleBothByDiscard',
       text:'+1 Power and +1 Stability for every 3 cards in your discard.',
       flavor:'Small at first, easy to ignore, technically manageable. Nobody budgeted for what it costs once it\'s had time to compound.', count:1,
       art:'art/cards/techdebt/Compound_Interest.png'},
-    {name:'The Faithless', type:'process', cost:2, power:1, stability:5, effect:null,
+    {name:'The Faithless', type:'process', cost:2, power:3, stability:5, effect:null,
       text:'—',
-      flavor:'Still writes every pull request by hand at 2am, no agent, no autocomplete, no faith in any of it. Slow and stubborn, and somehow never the one whose code breaks in production.', count:3,
+      flavor:'Still writes every pull request by hand at 2am, no agent, no autocomplete, no faith in any of it. Slow and stubborn, and somehow never the one whose code breaks in production.', count:2,
       art:'art/cards/techdebt/The_Faithless.png'},
     {name:'The Great Refactor', type:'process', cost:3, power:4, stability:4, effect:'shuffleDiscardIn',
-      text:'On deploy: shuffle your discard into your deck.',
+      text:'On deploy: shuffle your discard into your deck. This gains +1 Power for every 2 cards shuffled in.',
       flavor:'Promised to take two weeks. It is still going, and everyone has stopped asking when it will be done.', count:2,
       art:'art/cards/techdebt/The_Great_Refactor.png'},
     {name:'Deprecated, Still In Prod', type:'process', cost:3, power:5, stability:4, effect:'scalePowerDiscard3',
-      text:'+1 Power per 3 cards in your discard.',
-      flavor:'Marked for removal in a ticket from two years ago. Half the company\'s revenue quietly depends on it.', count:2,
+      text:'+1 Power per 2 cards in your discard.',
+      flavor:'Marked for removal in a ticket from two years ago. Half the company\'s revenue quietly depends on it.', count:3,
       art:'art/cards/techdebt/Deprecated_Still_In_Prod.png'},
     {name:'The Rewrite', type:'process', cost:4, power:6, stability:5, effect:'growOnAnyCrash',
       text:'+2 Power permanently whenever any Agent crashes.',
-      flavor:'This time it will be different, everyone promises. It gets stronger with every failure it watches, and there are a lot of failures.', count:1,
+      flavor:'This time it will be different, everyone promises. It gets stronger with every failure it watches, and there are a lot of failures.', count:2,
       art:'art/cards/techdebt/The_Rewrite.png'},
-    {name:'The Ancient Dependency', type:'process', cost:4, power:3, stability:8, effect:'scaleStabilityByDiscard',
+    {name:'The Ancient Dependency', type:'process', cost:4, power:3, stability:6, effect:'scaleStabilityByDiscard',
       text:'+1 Stability per card in your discard.',
-      flavor:'Nobody remembers installing it and nobody is brave enough to remove it. It has quietly held the whole thing up for a decade.', count:2,
+      flavor:'Nobody remembers installing it and nobody is brave enough to remove it. It has quietly held the whole thing up for a decade.', count:1,
       art:'art/cards/techdebt/The_Ancient_Dependency.png'},
     {name:'Ship It And See', type:'patch', effect:'drawThenDiscard',
       text:'Draw 1, then discard 1.',
@@ -458,7 +458,7 @@ const DECK_TEMPLATES = {
       art:'art/cards/techdebt/Ship_It_And_See.png'},
     {name:'We\'ll Fix It Later', type:'patch', effect:'mulligan',
       text:'Discard your hand, draw that many.',
-      flavor:'A promise made in good faith and broken by every sprint since. \'Later\' has never once arrived on schedule.', count:2,
+      flavor:'A promise made in good faith and broken by every sprint since. \'Later\' has never once arrived on schedule.', count:1,
       art:'art/cards/techdebt/Well_Fix_It_Later.png'},
     {name:'TODO: Refactor This', type:'patch', effect:'look3take1',
       text:'Look at top 3 of deck, take 1, discard rest.',
@@ -468,9 +468,9 @@ const DECK_TEMPLATES = {
       text:'Crash both players\' Primary Agents.',
       flavor:'The migration finally reaches production, and it takes down the old system and the new one with it. A clean slate, technically.', count:1,
       art:'art/cards/techdebt/Everything_Is_Deprecated.png'},
-    {name:'Crunch Mode', type:'patch', effect:'tempPowerBuff3',
-      text:'Your Primary gets +3 Power until end of turn.',
-      flavor:'Three engineers, one deadline, zero sleep. Astonishingly, for one night, it actually works.', count:1,
+    {name:'Crunch Mode', type:'patch', effect:'attackAgain',
+      text:'Your Agent attacks again this turn.',
+      flavor:'Three engineers, one deadline, zero sleep. Astonishingly, for one night, they ship twice.', count:2,
       art:'art/cards/techdebt/Crunch_Mode.png'},
     {name:'AGI', type:'process', cost:4, power:8, stability:6, effect:'coinDoubleOrNothing',
       text:'Flip a coin: Heads = double Power. Tails = does nothing.',
@@ -517,23 +517,23 @@ function shuffle(arr){
   return a;
 }
 
-function newPlayerState(deckKey){
+function newPlayerState(deckKey, extraCard){
   const deck = shuffle(expand(DECK_TEMPLATES[deckKey], deckKey));
-  const hand = deck.splice(0,5);
+  const hand = deck.splice(0, extraCard ? 6 : 5);
   return {
     deckKey, deck, hand, discard:[],
     primary:null, backup:null,
     shipPoints:0, turnsTaken:0,
     deploysRemaining:0, patchesRemaining:0,
     skipNextPatch:false, skipNextDeploy:false, skipNextAttack:false, skipAttackThisTurn:false,
-    extraAttack:false, rerollCharges:0, attackedThisTurn:false,
+    extraAttack:0, rerollCharges:0, attackedThisTurn:false,
     deploysThisTurn:0, overclockPlayedThisTurn:false,
   };
 }
 
 function startMatch(){
   state = {
-    players:{A:newPlayerState(pickA), B:newPlayerState(pickB)},
+    players:{A:newPlayerState(pickA, false), B:newPlayerState(pickB, true)},
     active:'A',
     log:[],
     gameOver:false, winner:null,
@@ -557,7 +557,7 @@ function addLog(msg, cls){
 /* ---------- effective stats ---------- */
 function effPower(inst, ownerState){
   let p = inst.power + (inst.bonusPower||0) + (inst.tempPowerBonus||0);
-  if(inst.effect==='scalePowerDiscard3') p += Math.floor(ownerState.discard.length/3);
+  if(inst.effect==='scalePowerDiscard3') p += Math.floor(ownerState.discard.length/2);
   if(inst.effect==='scalePowerByPatchDiscard') p += ownerState.discard.filter(c=>c.type==='patch').length;
   if(inst.effect==='growPerTurnSurvive') p += (inst.turnsSurvived||0);
   if(inst.effect==='scaleBothByDiscard') p += Math.floor(ownerState.discard.length/3);
@@ -640,8 +640,19 @@ function deployCard(ownerKey, uid){
     promptDiscardOne(ownerKey);
   }
   if(card.effect==='shuffleDiscardIn'){
+    const n = st.discard.length;
     st.deck = shuffle(st.deck.concat(st.discard)); st.discard=[];
-    addLog(card.name+' shuffles the discard pile back into the deck.');
+    if(n>0){
+      const grow = Math.floor(n/2);
+      if(grow>0){
+        card.bonusPower = (card.bonusPower||0) + grow;
+        addLog(card.name+' shuffles '+n+' cards back and gains +'+grow+' Power.');
+      } else {
+        addLog(card.name+' shuffles the discard pile back into the deck.');
+      }
+    } else {
+      addLog(card.name+' finds an empty discard pile.');
+    }
   }
   if(card.effect==='bounceOppPrimary'){
     const oppSt = state.players[oppKeyOf(ownerKey)];
@@ -651,6 +662,11 @@ function deployCard(ownerKey, uid){
       addLog(card.name+' bounces '+oppSt.primary.name+" back to the opponent's hand.");
       oppSt.hand.push(oppSt.primary);
       oppSt.primary = null;
+      if(oppSt.backup){
+        oppSt.primary = oppSt.backup;
+        oppSt.backup = null;
+        addLog(label(oppKeyOf(ownerKey))+"'s Backup is forced into Primary after the bounce.");
+      }
     } else {
       addLog(card.name+' finds no Primary Agent to bounce.');
     }
@@ -745,7 +761,7 @@ function resolvePatch(ownerKey, card){
   const st = state.players[ownerKey];
   const oppKey = oppKeyOf(ownerKey);
   switch(card.effect){
-    case 'attackAgain': st.extraAttack = true; break;
+    case 'attackAgain': st.extraAttack = (st.extraAttack||0) + 1; break;
     case 'extraDeploy': st.deploysRemaining += 1; break;
     case 'draw2': drawCards(st,2); break;
     case 'reroll': st.rerollCharges += 1; break;
@@ -784,7 +800,6 @@ function resolvePatch(ownerKey, card){
     case 'skipOppPatch': state.players[oppKey].skipNextPatch = true; addLog(card.name+" blocks the opponent's next Overclock."); break;
     case 'skipOppAttack': state.players[oppKey].skipNextAttack = true; addLog(card.name+" blocks the opponent's next attack."); break;
     case 'discardOppRandom2Draw1':
-      discardRandom(state.players[oppKey]);
       discardRandom(state.players[oppKey]);
       drawCards(st,1);
       break;
@@ -956,12 +971,18 @@ function doOneAttack(activeKey){
   if(attackerDied){ crashOwnCard(activeKey, attacker); }
 
   if(crashes){
-    addLog(attacker.name+' ('+power+') crashes '+defender.name+' ('+stab+'). No Ship Point — only a direct hit on the opponent scores.', 'bad');
-    showToast(attacker.name+' crashes '+defender.name+' (no score)', 1600);
+    addLog(attacker.name+' ('+power+') crashes '+defender.name+' ('+stab+').', 'bad');
+    showToast(attacker.name+' crashes '+defender.name, 1600);
     crashOwnCard(passiveKey, defender);
+    if(!defState.backup && !state.gameOver){
+      atkState.shipPoints++;
+      addLog(label(activeKey)+' scores a breakthrough — the opponent has no Backup. Ship Points: '+atkState.shipPoints+'/'+WIN_POINTS, 'good');
+      showToast('⚡ '+label(activeKey)+' breaks through! '+atkState.shipPoints+'/'+WIN_POINTS, 1800);
+      checkWin();
+    }
     if(attacker.effect==='drawOnCrash'){ drawCards(atkState,1); addLog(attacker.name+' draws a card.'); }
     if(attacker.effect==='attackAgainOnCrash' && !attackerDied){
-      atkState.extraAttack = true;
+      atkState.extraAttack = (atkState.extraAttack||0) + 1;
       addLog(attacker.name+' crashed its target and gets to attack again this turn.', 'good');
     }
     if(attacker.effect==='stealOppCardOnCrash'){
@@ -997,8 +1018,16 @@ function performAttack(activeKey){
       crashOwnCard(activeKey, attackerRef);
     }
   }
-  if(!state.gameOver && st.extraAttack){
-    st.extraAttack = false;
+  while(!state.gameOver && (st.extraAttack||0)>0){
+    st.extraAttack--;
+    // Extra attacks can follow a crashed Primary: promote your own Backup
+    // immediately so the extra swing has a body. Opponent Backup still waits
+    // until end of turn, so a crash-then-chain can score an unblocked hit.
+    if(!st.primary && st.backup){
+      st.primary = st.backup;
+      st.backup = null;
+      addLog(label(activeKey)+"'s Backup jumps in for the extra attack.");
+    }
     doOneAttack(activeKey);
   }
 }
@@ -1122,25 +1151,78 @@ function swapSlots(key){
 }
 
 /* ---------- simple AI ---------- */
+function aiPreviewCombat(activeKey){
+  const st = state.players[activeKey];
+  const defState = state.players[oppKeyOf(activeKey)];
+  const attacker = st.primary;
+  if(!attacker) return {can:false};
+  if(st.skipAttackThisTurn) return {can:false};
+  if(attacker.deployedTurn === st.turnsTaken && attacker.effect!=='noSummoningSickness') return {can:false};
+  const defender = defState.primary;
+  if(!defender) return {can:true, unblocked:true, crashDef:false, crashAtk:false};
+  let power = effPower(attacker, st);
+  if(attacker.effect==='attackBonus2') power += 2;
+  if(attacker.effect==='firstAttackBonus' && !attacker.hasAttacked) power += 5;
+  const crashDef = power >= effStability(defender, defState);
+  const crashAtk = effPower(defender, defState) >= effStability(attacker, st);
+  return {can:true, unblocked:false, crashDef, crashAtk};
+}
+
 async function aiTakeTurn(){
   const st = state.players.B;
   if(state.gameOver) return;
+
+  const extra = st.hand.find(c=>c.type==='patch' && c.effect==='extraDeploy' && canPlayPatch('B'));
+  if(extra && st.hand.some(c=>c.type==='process' && c.uid!==extra.uid)){
+    playPatch('B', extra.uid);
+    await wait(500);
+  }
+
   while(st.deploysRemaining>0){
     const opts = st.hand.filter(c=>c.type==='process' && canDeploy('B',c));
     if(opts.length===0) break;
-    opts.sort((a,b)=>b.power-a.power);
+    opts.sort((a,b)=>{
+      const bounceBoost = (c)=> (c.effect==='bounceOppPrimary' && state.players.A.primary) ? 8 : 0;
+      return (b.power + bounceBoost(b)) - (a.power + bounceBoost(a));
+    });
     deployCard('B', opts[0].uid);
-    await wait(700);
+    await wait(500);
+    if(modal){
+      // Auto-pick the first (highest-value-looking) option for steal/discard/tutor.
+      const pick = modal.items[0] && modal.items[0].value;
+      if(pick!==undefined) modal.onPick(pick);
+      else modal=null;
+      render();
+    }
   }
-  const simple = ['draw2','extraDeploy','attackAgain','skipAttackDraw2','drawThenDiscard','mulligan','reroll'];
+
+  const useful = {
+    draw2:8, extraDeploy:7, attackAgain:7, skipAttackDraw2:3, drawThenDiscard:2,
+    mulligan:2, reroll:4, tempPowerBuff3:5, crashOppPrimary:9, skipOppAttack:7,
+    skipOppPatch:4, discardOppRandom2Draw1:6, tutor:8, look3take1:5,
+    mutualCrashPrimaries:4, mutualRandomDiscard:2
+  };
   while(st.patchesRemaining>0){
-    const opts = st.hand.filter(c=>c.type==='patch' && simple.includes(c.effect));
+    const opts = st.hand.filter(c=>c.type==='patch' && useful[c.effect]);
     if(opts.length===0) break;
-    playPatch('B', opts[0].uid);
-    await wait(700);
+    opts.sort((a,b)=>(useful[b.effect]||0)-(useful[a.effect]||0));
+    const pick = opts[0];
+    if((useful[pick.effect]||0) < 4) break;
+    playPatch('B', pick.uid);
+    await wait(500);
+    if(modal){
+      const v = modal.items[0] && modal.items[0].value;
+      if(v!==undefined) modal.onPick(v);
+      else modal=null;
+      render();
+    }
   }
-  await wait(350);
-  handleAttackAndEndTurn('B');
+
+  await wait(300);
+  const pv = aiPreviewCombat('B');
+  const shouldSwing = pv.can && (pv.unblocked || (pv.crashDef && !pv.crashAtk) || (pv.crashDef && st.backup));
+  if(shouldSwing) handleAttackAndEndTurn('B');
+  else handleEndTurnClick('B');
 }
 
 /* ========================= RENDER ========================= */
@@ -1227,9 +1309,9 @@ function renderSelect(){
     '<div class="pitch">'+
       '<p class="pitch-lead">A 2-player card battler about shipping AI products. Deploy Agents, swing for Ship Points, and try not to crash your own stack.</p>'+
       '<ul class="pitch-rules">'+
-        '<li><b>Goal:</b> first to '+WIN_POINTS+' Ship Points wins. You score only with an unblocked hit — when they have no Primary Agent to defend.</li>'+
+        '<li><b>Goal:</b> first to '+WIN_POINTS+' Ship Points wins. You score with an unblocked hit (they have no Primary) or a breakthrough (you crash their last Agent and they have no Backup).</li>'+
         '<li><b>Board:</b> each player has a Primary and a Backup Agent slot. Deploy Agents and play Overclocks from a 30-card deck.</li>'+
-        '<li><b>Combat:</b> attacking is optional and risky. Your Primary hits theirs; if their Power meets your Stability, you crash too. Crashing their Agent clears the board but does not score by itself.</li>'+
+        '<li><b>Combat:</b> attacking is optional and risky. Your Primary hits theirs; if their Power meets your Stability, you crash too. Crashing their last Agent (no Backup) is a breakthrough and scores; crashing through a Backup does not.</li>'+
         '<li><b>Turn:</b> draw → optionally deploy &amp; Overclock → optionally Attack → End Turn. New Agents can\'t attack the turn they deploy.</li>'+
       '</ul>'+
     '</div>'+
@@ -1248,12 +1330,12 @@ function renderSelect(){
 
 function rulesHTML(){
   return '<div class="rules-panel">'+
-    '<h4>Setup</h4><p>Each player: 2 Agent slots (Primary/Backup), start at 0 Ship Points. First to '+WIN_POINTS+' wins. Opening hand is 5 cards.</p>'+
+    '<h4>Setup</h4><p>Each player: 2 Agent slots (Primary/Backup), start at 0 Ship Points. First to '+WIN_POINTS+' wins. Opening hand is 5 cards; the second player draws 1 extra card.</p>'+
     '<h4>Each turn</h4><ol>'+
       '<li>Draw 1 card.</li>'+
       '<li>Optionally deploy 1 Agent into an empty slot (Cost ≤ current turn number, capped at 4). A newly deployed Agent can\'t attack the turn it comes online.</li>'+
       '<li>Optionally play 1 Overclock — any time during your own turn, before or after deploying. One per turn.</li>'+
-      "<li>Attacking is optional and happens at most once per turn (click Attack). Your Primary attacks their Primary: Power &ge; Stability crashes their Agent (clears their board — no Ship Point by itself). A Ship Point only comes from a direct, unblocked hit (they have no Primary to block with).</li>"+
+      "<li>Attacking is optional and happens at most once per turn (click Attack). Your Primary attacks their Primary: Power &ge; Stability crashes their Agent. If they had no Backup, that's a breakthrough and you score a Ship Point. An unblocked hit (they have no Primary at all) also scores. Extra attacks can punch through after a crash, because their Backup does not promote until end of turn.</li>"+
       "<li><b>Attacking is a risk:</b> if the defending Agent's Power meets or beats your attacker's own Stability, your Agent crashes too — even if your attack also crashed theirs. A high-Stability Agent is safer to attack with than a high-Power one with no defense.</li>"+
       "<li>If a Primary is empty at the end of a turn, that player's Backup is automatically promoted into Primary.</li>"+
       "<li>You may manually swap Backup into Primary any time on your turn — except a Backup can't be swapped in on the same turn it was deployed.</li>"+
