@@ -91,7 +91,7 @@ function oppKeyOf(key) { return key === "A" ? "B" : "A"; }
 
 function effPower(inst, ownerState) {
   let p = inst.power + (inst.bonusPower || 0) + (inst.tempPowerBonus || 0);
-  if (inst.effect === "scalePowerDiscard3") p += Math.floor(ownerState.discard.length / 3);
+  if (inst.effect === "scalePowerDiscard3") p += Math.floor(ownerState.discard.length / 2);
   if (inst.effect === "scalePowerByPatchDiscard") p += ownerState.discard.filter(c => c.type === "patch").length;
   if (inst.effect === "growPerTurnSurvive") p += (inst.turnsSurvived || 0);
   if (inst.effect === "scaleBothByDiscard") p += Math.floor(ownerState.discard.length / 3);
@@ -237,7 +237,7 @@ class Game {
       st.deck = shuffle(st.deck.concat(st.discard), this.rng);
       st.discard = [];
       if (n > 0) {
-        const grow = Math.floor(n / 3);
+        const grow = Math.floor(n / 2);
         if (grow > 0) card.bonusPower = (card.bonusPower || 0) + grow;
       }
     }

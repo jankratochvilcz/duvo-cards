@@ -344,7 +344,7 @@ const DECK_TEMPLATES = {
       text:'Flip a coin: Heads = double Power. Tails = does nothing.',
       flavor:'Ask ten researchers when it arrives and get eleven different answers. When it finally shows up, it is either everything or absolutely nothing.', count:1,
       art:'art/cards/hallucination/AGI.png'},
-    {name:'The Bug That Fixed Itself', type:'process', cost:2, power:5, stability:5, effect:'coinPreventCrash',
+    {name:'The Bug That Fixed Itself', type:'process', cost:3, power:5, stability:5, effect:'coinPreventCrash',
       text:'When it would crash: flip a coin, Heads = prevented.',
       flavor:'Nobody changed anything. It just stopped happening one Tuesday, and everyone agreed never to ask why.', count:1,
       art:'art/cards/hallucination/The_Bug_That_Fixed_Itself.png'},
@@ -417,7 +417,7 @@ const DECK_TEMPLATES = {
   ],
   techdebt: [
     {name:'Legacy Code', type:'process', cost:1, power:3, stability:3, effect:'scalePowerDiscard3',
-      text:'+1 Power per 3 cards in your discard.',
+      text:'+1 Power per 2 cards in your discard.',
       flavor:'Written in a language nobody on the team still knows. It gets scarier the longer it survives.', count:3,
       art:'art/cards/techdebt/Legacy_Code.png'},
     {name:'The Duct Tape Fix', type:'process', cost:1, power:2, stability:2, effect:'recycleOnCrash',
@@ -437,11 +437,11 @@ const DECK_TEMPLATES = {
       flavor:'Still writes every pull request by hand at 2am, no agent, no autocomplete, no faith in any of it. Slow and stubborn, and somehow never the one whose code breaks in production.', count:2,
       art:'art/cards/techdebt/The_Faithless.png'},
     {name:'The Great Refactor', type:'process', cost:3, power:4, stability:4, effect:'shuffleDiscardIn',
-      text:'On deploy: shuffle your discard into your deck. This gains +1 Power for every 3 cards shuffled in.',
+      text:'On deploy: shuffle your discard into your deck. This gains +1 Power for every 2 cards shuffled in.',
       flavor:'Promised to take two weeks. It is still going, and everyone has stopped asking when it will be done.', count:2,
       art:'art/cards/techdebt/The_Great_Refactor.png'},
     {name:'Deprecated, Still In Prod', type:'process', cost:3, power:5, stability:4, effect:'scalePowerDiscard3',
-      text:'+1 Power per 3 cards in your discard.',
+      text:'+1 Power per 2 cards in your discard.',
       flavor:'Marked for removal in a ticket from two years ago. Half the company\'s revenue quietly depends on it.', count:3,
       art:'art/cards/techdebt/Deprecated_Still_In_Prod.png'},
     {name:'The Rewrite', type:'process', cost:4, power:6, stability:5, effect:'growOnAnyCrash',
@@ -557,7 +557,7 @@ function addLog(msg, cls){
 /* ---------- effective stats ---------- */
 function effPower(inst, ownerState){
   let p = inst.power + (inst.bonusPower||0) + (inst.tempPowerBonus||0);
-  if(inst.effect==='scalePowerDiscard3') p += Math.floor(ownerState.discard.length/3);
+  if(inst.effect==='scalePowerDiscard3') p += Math.floor(ownerState.discard.length/2);
   if(inst.effect==='scalePowerByPatchDiscard') p += ownerState.discard.filter(c=>c.type==='patch').length;
   if(inst.effect==='growPerTurnSurvive') p += (inst.turnsSurvived||0);
   if(inst.effect==='scaleBothByDiscard') p += Math.floor(ownerState.discard.length/3);
@@ -643,7 +643,7 @@ function deployCard(ownerKey, uid){
     const n = st.discard.length;
     st.deck = shuffle(st.deck.concat(st.discard)); st.discard=[];
     if(n>0){
-      const grow = Math.floor(n/3);
+      const grow = Math.floor(n/2);
       if(grow>0){
         card.bonusPower = (card.bonusPower||0) + grow;
         addLog(card.name+' shuffles '+n+' cards back and gains +'+grow+' Power.');
@@ -1330,7 +1330,7 @@ function renderSelect(){
 
 function rulesHTML(){
   return '<div class="rules-panel">'+
-    '<h4>Setup</h4><p>Each player: 2 Agent slots (Primary/Backup), start at 0 Ship Points. First to '+WIN_POINTS+' wins. Opening hand is 5 cards.</p>'+
+    '<h4>Setup</h4><p>Each player: 2 Agent slots (Primary/Backup), start at 0 Ship Points. First to '+WIN_POINTS+' wins. Opening hand is 5 cards; the second player draws 1 extra card.</p>'+
     '<h4>Each turn</h4><ol>'+
       '<li>Draw 1 card.</li>'+
       '<li>Optionally deploy 1 Agent into an empty slot (Cost ≤ current turn number, capped at 4). A newly deployed Agent can\'t attack the turn it comes online.</li>'+

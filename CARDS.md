@@ -53,7 +53,7 @@ _Coin-flip swings — can blow out or fizzle completely._
 | 2 | Just Making Things Up | Overclock | — | — | `attackAgain` | Your Agent attacks again this turn. | The first swing was a guess. The second swing is also a guess. Somehow both of them land. |
 | 2 | Few-Shot Priming | Overclock | — | — | `tempPowerBuff3` | Your Primary gets +3 Power until end of turn. | Show it three good examples right before it answers and watch performance jump. It has no idea why those examples worked either. |
 | 1 | AGI | Agent (Rare) | 4 | 8/6 | `coinDoubleOrNothing` | Flip a coin: Heads = double Power. Tails = does nothing. | Ask ten researchers when it arrives and get eleven different answers. When it finally shows up, it is either everything or absolutely nothing. |
-| 1 | The Bug That Fixed Itself | Agent (Rare) | 2 | 5/5 | `coinPreventCrash` | When it would crash: flip a coin, Heads = prevented. | Nobody changed anything. It just stopped happening one Tuesday, and everyone agreed never to ask why. |
+| 1 | The Bug That Fixed Itself | Agent (Rare) | 3 | 5/5 | `coinPreventCrash` | When it would crash: flip a coin, Heads = prevented. | Nobody changed anything. It just stopped happening one Tuesday, and everyone agreed never to ask why. |
 
 ## Prompt Injection — Interference
 
@@ -92,13 +92,13 @@ _Weak early, dangerous if the game runs long._
 
 | Qty | Name | Type | Cost | Pwr/Stb | Effect key | Rules text | Flavor |
 |---|---|---|---|---|---|---|---|
-| 3 | Legacy Code | Agent | 1 | 3/3 | `scalePowerDiscard3` | +1 Power per 3 cards in your discard. | Written in a language nobody on the team still knows. It gets scarier the longer it survives. |
+| 3 | Legacy Code | Agent | 1 | 3/3 | `scalePowerDiscard3` | +1 Power per 2 cards in your discard. | Written in a language nobody on the team still knows. It gets scarier the longer it survives. |
 | 3 | The Duct Tape Fix | Agent | 1 | 2/2 | `recycleOnCrash` | When this crashes, it goes back into your deck instead of the discard. | Held together by a comment that says 'temporary' and a commit from three years ago. When it finally crashes, it's fine — it'll just turn up again later. |
 | 2 | Monkey Patch | Agent | 2 | 4/3 | `scalePowerByPatchDiscard` | +1 Power per Overclock card in your discard. | Overwrites the behavior of something it does not own and never asked permission for. Works great, until the day it does not. |
 | 1 | Compound Interest | Agent | 3 | 2/3 | `scaleBothByDiscard` | +1 Power and +1 Stability for every 3 cards in your discard. | Small at first, easy to ignore, technically manageable. Nobody budgeted for what it costs once it's had time to compound. |
 | 2 | The Faithless | Agent | 2 | 3/5 | `—` | _(vanilla — no ability)_ | Still writes every pull request by hand at 2am, no agent, no autocomplete, no faith in any of it. Slow and stubborn, and somehow never the one whose code breaks in production. |
-| 2 | The Great Refactor | Agent | 3 | 4/4 | `shuffleDiscardIn` | On deploy: shuffle your discard into your deck. This gains +1 Power for every 3 cards shuffled in. | Promised to take two weeks. It is still going, and everyone has stopped asking when it will be done. |
-| 3 | Deprecated, Still In Prod | Agent | 3 | 5/4 | `scalePowerDiscard3` | +1 Power per 3 cards in your discard. | Marked for removal in a ticket from two years ago. Half the company's revenue quietly depends on it. |
+| 2 | The Great Refactor | Agent | 3 | 4/4 | `shuffleDiscardIn` | On deploy: shuffle your discard into your deck. This gains +1 Power for every 2 cards shuffled in. | Promised to take two weeks. It is still going, and everyone has stopped asking when it will be done. |
+| 3 | Deprecated, Still In Prod | Agent | 3 | 5/4 | `scalePowerDiscard3` | +1 Power per 2 cards in your discard. | Marked for removal in a ticket from two years ago. Half the company's revenue quietly depends on it. |
 | 2 | The Rewrite | Agent | 4 | 6/5 | `growOnAnyCrash` | +2 Power permanently whenever any Agent crashes. | This time it will be different, everyone promises. It gets stronger with every failure it watches, and there are a lot of failures. |
 | 1 | The Ancient Dependency | Agent | 4 | 3/6 | `scaleStabilityByDiscard` | +1 Stability per card in your discard. | Nobody remembers installing it and nobody is brave enough to remove it. It has quietly held the whole thing up for a decade. |
 | 2 | Ship It And See | Overclock | — | — | `drawThenDiscard` | Draw 1, then discard 1. | The most rigorous testing methodology available to a team with no time left. Production is the test suite now. |

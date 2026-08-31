@@ -119,7 +119,7 @@ recomputed on the fly from these layers, all of which stack:
   (`tempPowerBuff3`: **Cache Warmup**, **Few-Shot Priming**, **Adversarial Perturbation**,
   **Crunch Mode**).
 - Discard-pile scalers, recomputed live from the current discard pile size — not snapshotted:
-  - `scalePowerDiscard3`: +1 Power per 3 cards in your discard (**Legacy Code**, **Deprecated,
+  - `scalePowerDiscard3`: +1 Power per 2 cards in your discard (**Legacy Code**, **Deprecated,
     Still In Prod**).
   - `scalePowerByPatchDiscard`: +1 Power per Overclock card specifically in your discard
     (**Monkey Patch**, **The Vibes-Based Answer**).
@@ -157,7 +157,7 @@ slot they land in):
 | `copyOppPrimaryStats` | Model Extraction | This card's effective Power/Stability become a snapshot of the opponent's current Primary |
 | `skipOppDeploy` | The Silent Observer | Opponent's next deploy is blocked |
 | `deployDraw2Discard1` | The Confabulator | Draw 2, then choose 1 to discard |
-| `shuffleDiscardIn` | The Great Refactor | Shuffle discard into deck; this Agent gains +1 Power per 3 cards shuffled in |
+| `shuffleDiscardIn` | The Great Refactor | Shuffle discard into deck; this Agent gains +1 Power per 2 cards shuffled in |
 | `bonusIfSecondDeploy` | Parallel Rollout | +2 Power if you already deployed another Agent this turn |
 | `bonusIfOverclockedThisTurn` | Zero-Day | +3 Power if you already played an Overclock this turn |
 

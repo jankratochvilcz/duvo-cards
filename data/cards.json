@@ -329,7 +329,7 @@
     {
       "name": "The Bug That Fixed Itself",
       "type": "process",
-      "cost": 2,
+      "cost": 3,
       "power": 5,
       "stability": 5,
       "effect": "coinPreventCrash",
@@ -526,7 +526,7 @@
       "power": 3,
       "stability": 3,
       "effect": "scalePowerDiscard3",
-      "text": "+1 Power per 3 cards in your discard.",
+      "text": "+1 Power per 2 cards in your discard.",
       "flavor": "Written in a language nobody on the team still knows. It gets scarier the longer it survives.",
       "count": 3,
       "art": "art/cards/techdebt/Legacy_Code.png"
@@ -586,7 +586,7 @@
       "power": 4,
       "stability": 4,
       "effect": "shuffleDiscardIn",
-      "text": "On deploy: shuffle your discard into your deck. This gains +1 Power for every 3 cards shuffled in.",
+      "text": "On deploy: shuffle your discard into your deck. This gains +1 Power for every 2 cards shuffled in.",
       "flavor": "Promised to take two weeks. It is still going, and everyone has stopped asking when it will be done.",
       "count": 2,
       "art": "art/cards/techdebt/The_Great_Refactor.png"
@@ -598,7 +598,7 @@
       "power": 5,
       "stability": 4,
       "effect": "scalePowerDiscard3",
-      "text": "+1 Power per 3 cards in your discard.",
+      "text": "+1 Power per 2 cards in your discard.",
       "flavor": "Marked for removal in a ticket from two years ago. Half the company's revenue quietly depends on it.",
       "count": 3,
       "art": "art/cards/techdebt/Deprecated_Still_In_Prod.png"
