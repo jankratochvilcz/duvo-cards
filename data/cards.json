@@ -361,7 +361,7 @@
       "effect": "peekStealCard",
       "text": "On deploy: take 1 card from opponent's hand.",
       "flavor": "Auto-dials pretending to be IT support, scripted charm and all. Somehow, this still works in 2026.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/injection/The_Charm_Exploit.png"
     },
     {
@@ -373,7 +373,7 @@
       "effect": "bounceOppPrimary",
       "text": "On deploy: return opponent's Primary Agent to their hand. Their Backup is promoted immediately.",
       "flavor": "Redirects the attention weights toward something that was never supposed to matter. The output still comes out fluent — just entirely gone.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/injection/Attention_Hijack.png"
     },
     {
@@ -397,7 +397,7 @@
       "effect": null,
       "text": "—",
       "flavor": "Sits quietly, unpatched and unknown, until exactly the right moment to use it. By the time anyone notices, it already worked.",
-      "count": 2,
+      "count": 3,
       "art": "art/cards/injection/Zero-Day.png"
     },
     {
@@ -409,7 +409,7 @@
       "effect": "peekStealCard",
       "text": "On deploy: take 1 card from opponent's hand.",
       "flavor": "Queries the competitor's model a few million times and reconstructs it for free. Ethically questionable; technically brilliant.",
-      "count": 2,
+      "count": 1,
       "art": "art/cards/injection/Model_Extraction.png"
     },
     {
@@ -433,7 +433,7 @@
       "effect": "sandboxImmune",
       "text": "Can't be targeted by opponent's bounce, swap, or removal effects.",
       "flavor": "One pixel changed, and suddenly the model is certain your agent is something else entirely. Small inputs, enormous confusion.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/injection/The_Adversarial_Example.png"
     },
     {
@@ -445,7 +445,7 @@
       "effect": "sandboxImmune",
       "text": "Can't be targeted by opponent's bounce, swap, or removal effects.",
       "flavor": "Spun up to break things before the real attackers do. Every crash it finds teaches it something new to try next.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/injection/The_Fuzzer.png"
     },
     {
@@ -463,7 +463,7 @@
       "effect": "skipOppAttack",
       "text": "Opponent skips their next attack.",
       "flavor": "Slips a new instruction into the context window before the real one arrives. The agent never knows it was not asked.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/injection/Inject_Instruction.png"
     },
     {
@@ -472,7 +472,7 @@
       "effect": "skipOppAttack",
       "text": "Opponent skips their next attack.",
       "flavor": "Floods the endpoint with garbage until nothing real gets through. Crude, deeply illegal, extremely effective.",
-      "count": 1,
+      "count": 2,
       "art": "art/cards/injection/Denial_Of_Service.png"
     },
     {
@@ -490,7 +490,7 @@
       "effect": "tempPowerBuff3",
       "text": "Your Primary gets +3 Power until end of turn.",
       "flavor": "Nudges the weights just enough, just this once, to get the answer you wanted this turn. Revert it quietly before anyone runs the eval again.",
-      "count": 5,
+      "count": 3,
       "art": "art/cards/injection/Adversarial_Perturbation.png"
     },
     {
