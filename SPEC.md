@@ -12,7 +12,7 @@ treat this as ground truth for *current* behavior — and update it in the same 
 
 ## Setup
 
-- Each player picks one of the four decks (see `CARDS.md` / `data/cards.json`).
+- Each player picks one of the four decks (see `data/cards.json`).
 - Each player has two **Agent slots**: **Primary** and **Backup**.
 - Each player starts at **0 Ship Points**. First to **5** wins.
 - Starting hand: 5 cards, drawn from the top of a shuffled 30-card deck. The second player
@@ -171,8 +171,7 @@ boosted by `extraDeploy`-adjacent effects. Full effect-key reference:
 `discardOppRandom2Draw1` (one random discard, not two), `drawThenDiscard`, `mulligan`, `look3take1`, `tutor`, `stabilityBuff2`,
 `reclaimCrashed`.
 
-See `data/cards.json` for exact card-to-effect mapping and rules text per card, or `CARDS.md` for
-the human-readable table.
+See `data/cards.json` for exact card-to-effect mapping and rules text per card.
 
 ---
 
