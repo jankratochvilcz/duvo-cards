@@ -480,6 +480,10 @@ function deployCard(ownerKey, uid){
     state.players[oppKeyOf(ownerKey)].skipNextDeploy = true;
     addLog(card.name+" blocks the opponent's next deploy.");
   }
+  if(card.effect==='skipOppAttack'){
+    state.players[oppKeyOf(ownerKey)].skipNextAttack = true;
+    addLog(card.name+" blocks the opponent's next attack.");
+  }
   render();
 }
 
@@ -943,7 +947,9 @@ async function aiTakeTurn(){
     if(opts.length===0) break;
     opts.sort((a,b)=>{
       const bounceBoost = (c)=> (c.effect==='bounceOppPrimary' && state.players.A.primary) ? 8 : 0;
-      return (b.power + bounceBoost(b)) - (a.power + bounceBoost(a));
+      const skipBoost = (c)=> (c.effect==='skipOppAttack') ? 4 : 0;
+      const stealBoost = (c)=> (c.effect==='peekStealCard' && state.players.A.hand.length>0) ? 5 : 0;
+      return (b.power + bounceBoost(b) + skipBoost(b) + stealBoost(b)) - (a.power + bounceBoost(a) + skipBoost(a) + stealBoost(a));
     });
     deployCard('B', opts[0].uid);
     await wait(500);

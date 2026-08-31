@@ -43,9 +43,9 @@ The simulator **must stay faithful** to `index.html`. If you change a combat rul
 4. Fresh simulator batches (new seeds). Repeat until faction win rates are close and ship-point wins dominate.
 5. Keep identities:
    - Latency: haste and crash-then-chain extra attacks.
-   - Hallucination: coin flips, tutors, a rare blowout (Temperature + AGI + extra attack).
-   - Prompt Injection: bounce / steal / skip as denial, not a free point every turn.
-   - Technical Debt: discard scaling, late extra-attack cash-in.
+   - Hallucination: coin flips (self-crash / prevent crash), tutors, a rare blowout (Temperature + AGI + extra attack).
+   - Prompt Injection: bounce / steal / skip as denial, not a free point every turn. Sandbox immunity is the anti-bounce answer.
+   - Technical Debt: discard scaling, mill, crash-grow, late extra-attack cash-in.
 
 ## Card edits
 

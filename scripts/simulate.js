@@ -190,12 +190,11 @@ class Game {
     if (c.type === "process") {
       let s = (c.power || 0) + (c.stability || 0) + (c.cost || 0);
       const rareFx = {
-        coinDoubleOrNothing: 8, firstAttackBonus: 7, coinPreventCrash: 7,
-        stealOppCardOnCrash: 6, growPerTurnSurvive: 7, singularityGrowth: 4,
+        coinDoubleOrNothing: 8, coinPreventCrash: 7, coinSelfCrash: 2,
         attackAgainOnCrash: 6, attackTwiceSelfCrash: 5, bounceOppPrimary: 6,
-        peekStealCard: 6, sandboxImmune: 4, skipOppDeploy: 5, raiseOppCost: 5,
-        deployDraw2Discard1: 4, gracefulOnce: 3, noSummoningSickness: 4,
-        growOnAnyCrash: 6, recycleOnCrash: 2,
+        peekStealCard: 6, sandboxImmune: 4, skipOppAttack: 5,
+        noSummoningSickness: 4, growOnAnyCrash: 6, scalePowerDiscard3: 4,
+        bonusIfSecondDeploy: 3, shuffleDiscardIn: 4,
       };
       s += rareFx[c.effect] || 0;
       if (st && st.turnsTaken >= (c.cost || 1)) s += 1;
@@ -290,6 +289,9 @@ class Game {
     }
     if (card.effect === "skipOppDeploy") {
       this.state.players[oppKeyOf(ownerKey)].skipNextDeploy = true;
+    }
+    if (card.effect === "skipOppAttack") {
+      this.state.players[oppKeyOf(ownerKey)].skipNextAttack = true;
     }
     return true;
   }
@@ -744,11 +746,7 @@ class Game {
       if (!opp.backup && st.primary && this.canAttackWithExisting(key)) s += 12;
     }
     if (card.effect === "peekStealCard" && opp.hand.length > 0) s += 5;
-    if (card.effect === "forceSwapOpp" && opp.primary && opp.backup) {
-      if (effPower(opp.backup, opp) < effPower(opp.primary, opp) - 1) s += 6;
-    }
-    if (card.effect === "skipOppDeploy") s += 4;
-    if (card.effect === "raiseOppCost") s += 5;
+    if (card.effect === "skipOppAttack") s += 5;
     if (card.effect === "sandboxImmune") s += 3;
     if (card.effect === "copyOppPrimaryStats" && opp.primary) {
       s += effPower(opp.primary, opp) + effStability(opp.primary, opp);
